@@ -7,8 +7,13 @@ namespace Domain.UnitTests.Common
     public class ValueObjectTests
     {
         [Fact]
-        public void ShouldDoSomething_WhenSomething()
+        public void Equals_ShouldReturnTrue_WhenSameObjectUsedForComparison()
         {
+            // Arrange
+
+            // Act
+
+            // Assert
         }
 
         private class Address : ValueObject
