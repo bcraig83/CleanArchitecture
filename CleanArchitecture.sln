@@ -3,9 +3,34 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{66E0CC46-A58E-4896-93D5-9B84EA49E6A6}"
+	ProjectSection(SolutionItems) = preProject
+		src\.gitkeep = src\.gitkeep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5DBFC29A-2C3F-4B47-B59B-5E86334CC46C}"
+	ProjectSection(SolutionItems) = preProject
+		tests\.gitkeep = tests\.gitkeep
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{BAFF0FAF-1274-460D-8596-91D729E89C61}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAFF0FAF-1274-460D-8596-91D729E89C61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAFF0FAF-1274-460D-8596-91D729E89C61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAFF0FAF-1274-460D-8596-91D729E89C61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAFF0FAF-1274-460D-8596-91D729E89C61}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BAFF0FAF-1274-460D-8596-91D729E89C61} = {66E0CC46-A58E-4896-93D5-9B84EA49E6A6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C62D0F4D-E0A9-4908-A9A6-64DFBF84C486}
