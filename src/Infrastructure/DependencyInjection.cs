@@ -36,7 +36,6 @@ namespace Infrastructure
                 .AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-
             services
                 .AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
