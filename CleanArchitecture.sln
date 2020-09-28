@@ -12,10 +12,19 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit", "unit", "{96B2F54D-89A8-479D-82D4-E187F70BF1D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "functional", "functional", "{9A4A78F0-9D46-44FC-9E14-007E8BC271B4}"
+	ProjectSection(SolutionItems) = preProject
+		tests\functional\.gitkeep = tests\functional\.gitkeep
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integration", "integration", "{CBFA04FC-D766-4D58-B175-E6CB1A8D8DF9}"
+	ProjectSection(SolutionItems) = preProject
+		tests\integration\.gitkeep = tests\integration\.gitkeep
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "exploratory", "exploratory", "{D273FCA8-6204-4B98-8E7B-16160CF743C2}"
+	ProjectSection(SolutionItems) = preProject
+		tests\exploratory\.gitkeep = tests\exploratory\.gitkeep
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.UnitTests", "tests\unit\Domain.UnitTests\Domain.UnitTests.csproj", "{6DFFEBE4-D7D3-48E2-9640-1ED2039D2B10}"
 EndProject
