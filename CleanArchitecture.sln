@@ -34,9 +34,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.FunctionalTests", "tests\functional\Application.FunctionalTests\Application.FunctionalTests.csproj", "{3231AC37-F6F4-49DB-98B7-C9911FCD3269}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{B0949B40-2772-4E3F-B532-2FF50AC94555}"
-	ProjectSection(SolutionItems) = preProject
-		.gitkeep = .gitkeep
-	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "src\Presentation\WebApi\WebApi.csproj", "{0276A04B-8ED5-49DF-90EA-99DCE8F107E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +67,10 @@ Global
 		{3231AC37-F6F4-49DB-98B7-C9911FCD3269}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3231AC37-F6F4-49DB-98B7-C9911FCD3269}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3231AC37-F6F4-49DB-98B7-C9911FCD3269}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0276A04B-8ED5-49DF-90EA-99DCE8F107E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0276A04B-8ED5-49DF-90EA-99DCE8F107E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0276A04B-8ED5-49DF-90EA-99DCE8F107E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0276A04B-8ED5-49DF-90EA-99DCE8F107E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +87,7 @@ Global
 		{769DC691-1701-425E-9E2A-857924153EBE} = {66E0CC46-A58E-4896-93D5-9B84EA49E6A6}
 		{3231AC37-F6F4-49DB-98B7-C9911FCD3269} = {9A4A78F0-9D46-44FC-9E14-007E8BC271B4}
 		{B0949B40-2772-4E3F-B532-2FF50AC94555} = {66E0CC46-A58E-4896-93D5-9B84EA49E6A6}
+		{0276A04B-8ED5-49DF-90EA-99DCE8F107E9} = {B0949B40-2772-4E3F-B532-2FF50AC94555}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C62D0F4D-E0A9-4908-A9A6-64DFBF84C486}
