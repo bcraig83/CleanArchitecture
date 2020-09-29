@@ -38,4 +38,11 @@ This repo is based on [this](https://github.com/jasontaylordev/CleanArchitecture
         - These are BDD style tests that prove the basic features of the application.
         - I would expect to use little (or no) mocking in these tests.
         - I would expect to use 'real' instances where possible.
-        - 
+        - Potentially have stubs or spies at the boundaries. Specifically where infrastructure pieces are called.
+        - In fact, we can probably say that these functional tests will NOT test the infrastructure layer at all (open to debate!)
+    - `integration`
+        - These specifically DO test the infrastructure layer.
+        - They ensure that we interact with various external entities as expected. This is admittedly a little vague and probably requires some further thought...
+    - `unit`
+        - Pretty much standard unit tests.
+        - Use mocking library (moq) but avoid using it for verification.
