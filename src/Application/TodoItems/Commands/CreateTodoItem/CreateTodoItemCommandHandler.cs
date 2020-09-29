@@ -15,7 +15,9 @@ namespace Application.TodoItems.Commands.CreateTodoItem
             _context = context;
         }
 
-        public async Task<int> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(
+            CreateTodoItemCommand request,
+            CancellationToken cancellationToken)
         {
             var entity = new TodoItem
             {
