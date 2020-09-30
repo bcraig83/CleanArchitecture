@@ -7,6 +7,8 @@ This repo is based on [this](https://github.com/jasontaylordev/CleanArchitecture
 ### General
 
 - All projects have been upgraded to use dot net core 3.1.
+- In general, I've migrated all dependencies to the latest-and-greatest, unless doing so included breaking changes.
+- Included an eventing model, which allows us to created events and handlers. These can be triggered when an entity is written back to the database. So in other words, push notifications of changes to the state in the persistance layer.
 
 ### Domain
 
