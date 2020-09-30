@@ -25,7 +25,7 @@ namespace Domain.Entities
         {
             IsDone = true;
 
-            Events.Add(new ToDoItemCompletedEvent(this));
+            Events.Add(new TodoItemCompletedEvent(this));
         }
     }
 }
