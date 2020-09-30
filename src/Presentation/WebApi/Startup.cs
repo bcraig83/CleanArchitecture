@@ -1,3 +1,6 @@
+using Application;
+using Infrastructure;
+using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +22,16 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddApplication();
+            services.AddInfrastructure(Configuration);
+
+            // TODO:
+            //services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+            services
+                .AddHealthChecks()
+                .AddDbContextCheck<ApplicationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -29,11 +42,15 @@ namespace WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHealthChecks("/health");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseIdentityServer();
 
             app.UseEndpoints(endpoints =>
             {
