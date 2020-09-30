@@ -25,18 +25,23 @@ namespace Application.TodoLists.Queries.GetTodos
 
         public async Task<TodosVm> Handle(GetTodosQuery request, CancellationToken cancellationToken)
         {
-            return new TodosVm
-            {
-                PriorityLevels = Enum.GetValues(typeof(PriorityLevel))
+            var priorityLevels = Enum.GetValues(typeof(PriorityLevel))
                     .Cast<PriorityLevel>()
                     .Select(p => new PriorityLevelDto { Value = (int)p, Name = p.ToString() })
-                    .ToList(),
+                    .ToList();
 
-                Lists = await _context.TodoLists
+            var lists = await _context.TodoLists
                     .ProjectTo<TodoListDto>(_mapper.ConfigurationProvider)
                     .OrderBy(t => t.Title)
-                    .ToListAsync(cancellationToken)
+                    .ToListAsync(cancellationToken);
+
+            var result = new TodosVm
+            {
+                PriorityLevels = priorityLevels,
+                Lists = lists
             };
+
+            return result;
         }
     }
 }
