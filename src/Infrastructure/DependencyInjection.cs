@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Infrastructure.Email;
 using Infrastructure.Files;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
@@ -42,9 +43,10 @@ namespace Infrastructure
                 .AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            services.AddTransient<IDateTime, DateTimeService>();
-            services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
+            services.AddTransient<IDateTime, DateTimeService>();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IIdentityService, IdentityService>();
 
             services
                 .AddAuthentication()
