@@ -3,11 +3,13 @@ using Domain.Common;
 using Domain.Entities;
 using IdentityServer4.EntityFramework.Options;
 using Infrastructure.Identity;
+using MediatR;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Options;
 using System.Data;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,24 +21,27 @@ namespace Infrastructure.Persistence
         private readonly ICurrentUserService _currentUserService;
         private readonly IDateTime _dateTime;
         private IDbContextTransaction _currentTransaction;
+        private readonly IMediator _mediator;
 
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions,
             ICurrentUserService currentUserService,
-            IDateTime dateTime) : base(options, operationalStoreOptions)
+            IDateTime dateTime,
+            IMediator mediator) : base(options, operationalStoreOptions)
         {
             _currentUserService = currentUserService;
             _dateTime = dateTime;
+            _mediator = mediator;
         }
 
         public DbSet<TodoList> TodoLists { get; set; }
 
         public DbSet<TodoItem> TodoItems { get; set; }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+            foreach (var entry in ChangeTracker.Entries<EventableEntity>())
             {
                 switch (entry.State)
                 {
@@ -52,7 +57,28 @@ namespace Infrastructure.Persistence
                 }
             }
 
-            return base.SaveChangesAsync(cancellationToken);
+            int result = await base.SaveChangesAsync(cancellationToken);
+
+
+            if (_mediator == null) return result;
+
+            // dispatch events only if save was successful
+            var entitiesWithEvents = ChangeTracker.Entries<EventableEntity>()
+                .Select(e => e.Entity)
+                .Where(e => e.Events.Any())
+                .ToArray();
+
+            foreach (var entity in entitiesWithEvents)
+            {
+                var events = entity.Events.ToArray();
+                entity.Events.Clear();
+                foreach (var domainEvent in events)
+                {
+                    await _mediator.Publish(domainEvent).ConfigureAwait(false);
+                }
+            }
+
+            return result;
         }
 
         public async Task BeginTransactionAsync()
