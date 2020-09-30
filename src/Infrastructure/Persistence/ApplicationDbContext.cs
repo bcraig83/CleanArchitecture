@@ -61,8 +61,10 @@ namespace Infrastructure.Persistence
 
             int result = await base.SaveChangesAsync(cancellationToken);
 
-
-            if (_mediator == null) return result;
+            if (_mediator == null)
+            {
+                return result;
+            }
 
             // dispatch events only if save was successful
             var entitiesWithEvents = entries

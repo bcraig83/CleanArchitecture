@@ -3,10 +3,12 @@ using Infrastructure.Files;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
 using Infrastructure.Services;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Infrastructure
 {
@@ -47,6 +49,8 @@ namespace Infrastructure
             services
                 .AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             return services;
         }
