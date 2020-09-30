@@ -4,7 +4,7 @@ using System;
 
 namespace Domain.Entities
 {
-    public class TodoItem : EventableEntity
+    public class TodoItem : BaseEntity
     {
         public int ListId { get; set; }
 
@@ -17,7 +17,6 @@ namespace Domain.Entities
         public DateTime? Reminder { get; set; }
 
         public PriorityLevel Priority { get; set; }
-
 
         public TodoList List { get; set; }
     }

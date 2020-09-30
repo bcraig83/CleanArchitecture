@@ -41,7 +41,9 @@ namespace Infrastructure.Persistence
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (var entry in ChangeTracker.Entries<EventableEntity>())
+            var entries = ChangeTracker.Entries<BaseEntity>();
+
+            foreach (var entry in entries)
             {
                 switch (entry.State)
                 {
@@ -63,7 +65,7 @@ namespace Infrastructure.Persistence
             if (_mediator == null) return result;
 
             // dispatch events only if save was successful
-            var entitiesWithEvents = ChangeTracker.Entries<EventableEntity>()
+            var entitiesWithEvents = entries
                 .Select(e => e.Entity)
                 .Where(e => e.Events.Any())
                 .ToArray();
@@ -74,7 +76,9 @@ namespace Infrastructure.Persistence
                 entity.Events.Clear();
                 foreach (var domainEvent in events)
                 {
-                    await _mediator.Publish(domainEvent).ConfigureAwait(false);
+                    await _mediator
+                        .Publish(domainEvent)
+                        .ConfigureAwait(false);
                 }
             }
 

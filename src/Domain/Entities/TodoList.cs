@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Domain.Entities
 {
-    public class TodoList : EventableEntity
+    public class TodoList : BaseEntity
     {
         public TodoList()
         {
