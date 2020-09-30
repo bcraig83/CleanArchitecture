@@ -4,7 +4,7 @@
     "WebApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "api/TodoLists",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
