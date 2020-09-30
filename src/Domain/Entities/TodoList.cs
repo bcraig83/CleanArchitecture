@@ -3,14 +3,12 @@ using System.Collections.Generic;
 
 namespace Domain.Entities
 {
-    public class TodoList : AuditableEntity
+    public class TodoList : EventableEntity
     {
         public TodoList()
         {
             Items = new List<TodoItem>();
         }
-
-        public int Id { get; set; }
 
         public string Title { get; set; }
 

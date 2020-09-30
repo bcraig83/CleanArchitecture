@@ -4,10 +4,8 @@ using System;
 
 namespace Domain.Entities
 {
-    public class TodoItem : AuditableEntity
+    public class TodoItem : EventableEntity
     {
-        public int Id { get; set; }
-
         public int ListId { get; set; }
 
         public string Title { get; set; }
