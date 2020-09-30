@@ -22,8 +22,7 @@ namespace Application.TodoItems.Commands.CreateTodoItem
             var entity = new TodoItem
             {
                 ListId = request.ListId,
-                Title = request.Title,
-                Done = false
+                Title = request.Title
             };
 
             _context.TodoItems.Add(entity);

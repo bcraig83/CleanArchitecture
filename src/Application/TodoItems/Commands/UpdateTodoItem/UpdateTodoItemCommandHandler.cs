@@ -26,7 +26,11 @@ namespace Application.TodoItems.Commands.UpdateTodoItem
             }
 
             entity.Title = request.Title;
-            entity.Done = request.Done;
+
+            if (request.Done == true)
+            {
+                entity.MarkComplete();
+            }
 
             await _context.SaveChangesAsync(cancellationToken);
 
