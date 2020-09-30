@@ -1,6 +1,5 @@
 ﻿using Application.TodoLists.Queries.GetTodos;
 using Application.TodoLists.Queries.GetTodos.Models;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
