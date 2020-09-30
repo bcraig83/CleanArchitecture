@@ -7,6 +7,7 @@ namespace Application.TodoItems.Handlers
 {
     public class TodoItemCompletedEventEmailHandler : IBaseEventHandler<TodoItemCompletedEvent>
     {
+        // This is just a sample. I wouldn't recommend sending an email on every completed TodoItem!
         private readonly IEmailSender _emailSender;
 
         public TodoItemCompletedEventEmailHandler(
