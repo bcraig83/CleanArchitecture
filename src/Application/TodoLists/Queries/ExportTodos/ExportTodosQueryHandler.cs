@@ -27,7 +27,9 @@ namespace Application.TodoLists.Queries.ExportTodos
             _repository = repository;
         }
 
-        public async Task<ExportTodosVm> Handle(ExportTodosQuery request, CancellationToken cancellationToken)
+        public async Task<ExportTodosVm> Handle(
+            ExportTodosQuery request,
+            CancellationToken cancellationToken)
         {
             var vm = new ExportTodosVm();
 
