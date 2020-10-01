@@ -26,7 +26,7 @@ namespace Application.FunctionalTests.Features
                     systemUnderTest = new CreateTodoItemCommandHandler(repository);
                 });
 
-            "And given no Todos are currently stored in the databas"
+            "And given no Todos are currently stored in the database"
                 .x(() =>
                 {
                     repository.GetAll().Count().ShouldBe(0);
@@ -57,7 +57,7 @@ namespace Application.FunctionalTests.Features
                         .ShouldBe(1);
                 });
 
-            "And that item should contain the correct title"
+            "And that item should contain the correct title, i.e. `Buy milk`"
                 .x(() =>
                 {
                     repository
