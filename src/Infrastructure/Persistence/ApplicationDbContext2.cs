@@ -1,0 +1,144 @@
+﻿using Application.Common.Interfaces;
+using Domain.Common;
+using Domain.Entities;
+using IdentityServer4.EntityFramework.Options;
+using Infrastructure.Identity;
+using MediatR;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Options;
+using System.Data;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Infrastructure.Persistence
+{
+    internal class ApplicationDbContext2 : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext2
+    {
+        private readonly ICurrentUserService _currentUserService;
+        private readonly IDateTime _dateTime;
+        private IDbContextTransaction _currentTransaction;
+        private readonly IMediator _mediator;
+
+        public ApplicationDbContext2(
+            DbContextOptions options,
+            IOptions<OperationalStoreOptions> operationalStoreOptions,
+            ICurrentUserService currentUserService,
+            IDateTime dateTime,
+            IMediator mediator) : base(options, operationalStoreOptions)
+        {
+            _currentUserService = currentUserService;
+            _dateTime = dateTime;
+            _mediator = mediator;
+        }
+
+        public DbSet<TodoItem> TodoItems { get; set; }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            var entries = ChangeTracker.Entries<BaseEntity>();
+
+            foreach (var entry in entries)
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedBy = _currentUserService.UserId;
+                        entry.Entity.Created = _dateTime.Now;
+                        break;
+
+                    case EntityState.Modified:
+                        entry.Entity.LastModifiedBy = _currentUserService.UserId;
+                        entry.Entity.LastModified = _dateTime.Now;
+                        break;
+                }
+            }
+
+            int result = await base.SaveChangesAsync(cancellationToken);
+
+            if (_mediator == null)
+            {
+                return result;
+            }
+
+            // dispatch events only if save was successful
+            var entitiesWithEvents = entries
+                .Select(e => e.Entity)
+                .Where(e => e.Events.Any())
+                .ToArray();
+
+            foreach (var entity in entitiesWithEvents)
+            {
+                var events = entity.Events.ToArray();
+                entity.Events.Clear();
+                foreach (var domainEvent in events)
+                {
+                    await _mediator
+                        .Publish(domainEvent)
+                        .ConfigureAwait(false);
+                }
+            }
+
+            return result;
+        }
+
+        public async Task BeginTransactionAsync()
+        {
+            if (_currentTransaction != null)
+            {
+                return;
+            }
+
+            _currentTransaction = await base.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted).ConfigureAwait(false);
+        }
+
+        public async Task CommitTransactionAsync()
+        {
+            try
+            {
+                await SaveChangesAsync().ConfigureAwait(false);
+
+                _currentTransaction?.Commit();
+            }
+            catch
+            {
+                RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                if (_currentTransaction != null)
+                {
+                    _currentTransaction.Dispose();
+                    _currentTransaction = null;
+                }
+            }
+        }
+
+        public void RollbackTransaction()
+        {
+            try
+            {
+                _currentTransaction?.Rollback();
+            }
+            finally
+            {
+                if (_currentTransaction != null)
+                {
+                    _currentTransaction.Dispose();
+                    _currentTransaction = null;
+                }
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            base.OnModelCreating(builder);
+        }
+    }
+}
