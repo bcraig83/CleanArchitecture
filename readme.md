@@ -2,6 +2,8 @@
 
 ![.NET Core](https://github.com/bcraig83/CleanArchitecture/workflows/.NET%20Core/badge.svg)
 
+TODO: this readme is a work-in-progress, mainly because the code base is also a work-in-progress! Note to self: make sure readme and code base are in sync by the time I'm "done" with this repo.
+
 This repo is based on [this](https://github.com/jasontaylordev/CleanArchitecture).
 
 ## What's tweaked
