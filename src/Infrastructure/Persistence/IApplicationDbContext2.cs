@@ -8,8 +8,7 @@ namespace Infrastructure.Persistence
     // TODO: obviously rename!
     public interface IApplicationDbContext2
     {
-        // TODO: add as we go along
-        //DbSet<TodoList> TodoLists { get; set; }
+        DbSet<TodoList> TodoLists { get; set; }
 
         DbSet<TodoItem> TodoItems { get; set; }
 

@@ -35,6 +35,7 @@ namespace Infrastructure.Persistence
             _mediator = mediator;
         }
 
+        public DbSet<TodoList> TodoLists { get; set; }
         public DbSet<TodoItem> TodoItems { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
