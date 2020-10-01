@@ -21,27 +21,27 @@ namespace Infrastructure
         {
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
-                services.AddDbContext<ApplicationDbContext>(options =>
+                services.AddDbContext<ApplicationDbContext2>(options =>
                     options.UseInMemoryDatabase("caSampleDb"));
             }
             else
             {
-                services.AddDbContext<ApplicationDbContext>(options =>
+                services.AddDbContext<ApplicationDbContext2>(options =>
                     options.UseSqlServer(
                         configuration.GetConnectionString("DefaultConnection"),
-                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                        b => b.MigrationsAssembly(typeof(ApplicationDbContext2).Assembly.FullName)));
             }
 
             services
-                .AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+                .AddScoped<IApplicationDbContext2>(provider => provider.GetService<ApplicationDbContext2>());
 
             services
                 .AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext2>();
 
             services
                 .AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext2>();
 
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
             services.AddTransient<IDateTime, DateTimeService>();

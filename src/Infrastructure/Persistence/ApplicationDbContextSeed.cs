@@ -19,7 +19,7 @@ namespace Infrastructure.Persistence
             }
         }
 
-        public static async Task SeedSampleDataAsync(ApplicationDbContext context)
+        public static async Task SeedSampleDataAsync(ApplicationDbContext2 context)
         {
             // Seed, if necessary
             if (!context.TodoLists.Any())

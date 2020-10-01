@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence
 {
-    internal class ApplicationDbContext2 : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext2
+    public class ApplicationDbContext2 : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext2
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IDateTime _dateTime;
