@@ -7,10 +7,10 @@ namespace Infrastructure.Persistence.Repositories
 {
     public class TodoListRepository : ITodoListRepository
     {
-        private readonly IApplicationDbContext2 _context;
+        private readonly IApplicationDbContext _context;
 
         public TodoListRepository(
-            IApplicationDbContext2 context)
+            IApplicationDbContext context)
         {
             _context = context;
         }

@@ -21,27 +21,27 @@ namespace Infrastructure
         {
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
-                services.AddDbContext<ApplicationDbContext2>(options =>
+                services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseInMemoryDatabase("caSampleDb"));
             }
             else
             {
-                services.AddDbContext<ApplicationDbContext2>(options =>
+                services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(
                         configuration.GetConnectionString("DefaultConnection"),
-                        b => b.MigrationsAssembly(typeof(ApplicationDbContext2).Assembly.FullName)));
+                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
             }
 
             services
-                .AddScoped<IApplicationDbContext2>(provider => provider.GetService<ApplicationDbContext2>());
+                .AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
             services
                 .AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext2>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services
                 .AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext2>();
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
             services.AddTransient<IDateTime, DateTimeService>();
@@ -53,6 +53,8 @@ namespace Infrastructure
                 .AddIdentityServerJwt();
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            // TODO: add repositories
 
             return services;
         }

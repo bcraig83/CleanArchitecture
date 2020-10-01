@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence
 {
-    // TODO: obviously rename!
-    public interface IApplicationDbContext2
+    public interface IApplicationDbContext
     {
         DbSet<TodoList> TodoLists { get; set; }
 
