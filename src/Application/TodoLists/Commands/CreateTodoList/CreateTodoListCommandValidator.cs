@@ -1,4 +1,4 @@
-﻿using Application.Common.Interfaces;
+﻿using Domain.Repositories;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
@@ -8,11 +8,12 @@ namespace Application.TodoLists.Commands.CreateTodoList
 {
     public class CreateTodoListCommandValidator : AbstractValidator<CreateTodoListCommand>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ITodoListRepository _repository;
 
-        public CreateTodoListCommandValidator(IApplicationDbContext context)
+        public CreateTodoListCommandValidator(
+            ITodoListRepository repository)
         {
-            _context = context;
+            _repository = repository;
 
             RuleFor(v => v.Title)
                 .NotEmpty().WithMessage("Title is required.")
@@ -22,7 +23,7 @@ namespace Application.TodoLists.Commands.CreateTodoList
 
         public async Task<bool> BeUniqueTitle(string title, CancellationToken cancellationToken)
         {
-            return await _context.TodoLists
+            return await _repository.GetAll()
                 .AllAsync(l => l.Title != title);
         }
     }

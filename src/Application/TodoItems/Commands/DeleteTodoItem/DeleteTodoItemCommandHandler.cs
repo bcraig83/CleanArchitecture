@@ -1,6 +1,6 @@
 ﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
 using Domain.Entities;
+using Domain.Repositories;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,25 +9,24 @@ namespace Application.TodoItems.Commands.DeleteTodoItem
 {
     public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemCommand>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ITodoItemRepository _repository;
 
-        public DeleteTodoItemCommandHandler(IApplicationDbContext context)
+        public DeleteTodoItemCommandHandler(
+            ITodoItemRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public async Task<Unit> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _context.TodoItems.FindAsync(request.Id);
+            var entity = await _repository.FindByIdAsync(request.Id);
 
             if (entity == null)
             {
                 throw new NotFoundException(nameof(TodoItem), request.Id);
             }
 
-            _context.TodoItems.Remove(entity);
-
-            await _context.SaveChangesAsync(cancellationToken);
+            await _repository.RemoveAsync(entity);
 
             return Unit.Value;
         }

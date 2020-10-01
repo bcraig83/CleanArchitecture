@@ -48,10 +48,11 @@ namespace Infrastructure.Persistence.Repositories
             return result.Entity;
         }
 
-        public Task<TodoItem> UpdateAsync(TodoItem entity)
+        public async Task<TodoItem> UpdateAsync(TodoItem entity)
         {
-            // TODO: currently not needed anywhere, but may be needed in the future.
-            throw new System.NotImplementedException();
+            var result = _context.TodoItems.Update(entity);
+            await _context.SaveChangesAsync();
+            return result.Entity;
         }
     }
 }

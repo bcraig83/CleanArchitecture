@@ -1,6 +1,6 @@
 ﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
 using Domain.Entities;
+using Domain.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -11,16 +11,20 @@ namespace Application.TodoLists.Commands.DeleteTodoList
 {
     public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListCommand>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ITodoListRepository _repository;
 
-        public DeleteTodoListCommandHandler(IApplicationDbContext context)
+        public DeleteTodoListCommandHandler(
+            ITodoListRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        public async Task<Unit> Handle(DeleteTodoListCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(
+            DeleteTodoListCommand request,
+            CancellationToken cancellationToken)
         {
-            var entity = await _context.TodoLists
+            // Surely some of this defensive code could go inside the repository implementation?
+            var entity = await _repository.GetAll()
                 .Where(l => l.Id == request.Id)
                 .SingleOrDefaultAsync(cancellationToken);
 
@@ -29,9 +33,7 @@ namespace Application.TodoLists.Commands.DeleteTodoList
                 throw new NotFoundException(nameof(TodoList), request.Id);
             }
 
-            _context.TodoLists.Remove(entity);
-
-            await _context.SaveChangesAsync(cancellationToken);
+            await _repository.RemoveAsync(entity);
 
             return Unit.Value;
         }

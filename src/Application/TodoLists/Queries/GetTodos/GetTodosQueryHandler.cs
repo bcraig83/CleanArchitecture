@@ -1,8 +1,8 @@
-﻿using Application.Common.Interfaces;
-using Application.TodoLists.Queries.GetTodos.Models;
+﻿using Application.TodoLists.Queries.GetTodos.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Enums;
+using Domain.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,13 +14,15 @@ namespace Application.TodoLists.Queries.GetTodos
 {
     public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, TodosVm>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ITodoItemRepository _repository;
         private readonly IMapper _mapper;
 
-        public GetTodosQueryHandler(IApplicationDbContext context, IMapper mapper)
+        public GetTodosQueryHandler(
+            IMapper mapper,
+            ITodoItemRepository repository)
         {
-            _context = context;
             _mapper = mapper;
+            _repository = repository;
         }
 
         public async Task<TodosVm> Handle(GetTodosQuery request, CancellationToken cancellationToken)
@@ -30,7 +32,7 @@ namespace Application.TodoLists.Queries.GetTodos
                     .Select(p => new PriorityLevelDto { Value = (int)p, Name = p.ToString() })
                     .ToList();
 
-            var lists = await _context.TodoLists
+            var lists = await _repository.GetAll()
                     .ProjectTo<TodoListDto>(_mapper.ConfigurationProvider)
                     .OrderBy(t => t.Title)
                     .ToListAsync(cancellationToken);
