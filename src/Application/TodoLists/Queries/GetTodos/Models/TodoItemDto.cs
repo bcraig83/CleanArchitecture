@@ -21,6 +21,7 @@ namespace Application.TodoLists.Queries.GetTodos.Models
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TodoItem, TodoItemDto>()
+                .ForMember(d => d.Done, opt => opt.MapFrom(s => s.IsDone))
                 .ForMember(d => d.Priority, opt => opt.MapFrom(s => (int)s.Priority));
         }
     }
