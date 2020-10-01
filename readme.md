@@ -1,5 +1,7 @@
 # Clean Architecture Solution Template
 
+![.NET Core](https://github.com/bcraig83/CleanArchitecture/workflows/.NET%20Core/badge.svg)
+
 This repo is based on [this](https://github.com/jasontaylordev/CleanArchitecture).
 
 ## What's tweaked
