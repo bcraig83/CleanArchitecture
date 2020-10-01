@@ -14,12 +14,12 @@ namespace Application.TodoLists.Queries.GetTodos
 {
     public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, TodosVm>
     {
-        private readonly ITodoItemRepository _repository;
+        private readonly ITodoListRepository _repository;
         private readonly IMapper _mapper;
 
         public GetTodosQueryHandler(
             IMapper mapper,
-            ITodoItemRepository repository)
+            ITodoListRepository repository)
         {
             _mapper = mapper;
             _repository = repository;
