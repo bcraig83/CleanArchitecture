@@ -1,8 +1,10 @@
 ﻿using Application.Common.Interfaces;
+using Domain.Repositories;
 using Infrastructure.Email;
 using Infrastructure.Files;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Repositories;
 using Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -53,6 +55,9 @@ namespace Infrastructure
                 .AddIdentityServerJwt();
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            services.AddTransient<ITodoItemRepository, TodoItemRepository>();
+            services.AddTransient<ITodoListRepository, TodoListRepository>();
 
             return services;
         }

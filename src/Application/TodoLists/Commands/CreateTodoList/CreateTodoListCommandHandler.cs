@@ -1,5 +1,5 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
+﻿using Domain.Entities;
+using Domain.Repositories;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,11 +8,12 @@ namespace Application.TodoLists.Commands.CreateTodoList
 {
     public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, int>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ITodoListRepository _repository;
 
-        public CreateTodoListCommandHandler(IApplicationDbContext context)
+        public CreateTodoListCommandHandler(
+            ITodoListRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public async Task<int> Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
@@ -22,11 +23,9 @@ namespace Application.TodoLists.Commands.CreateTodoList
                 Title = request.Title
             };
 
-            _context.TodoLists.Add(entity);
+            var addedEntity = await _repository.AddAsync(entity);
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return entity.Id;
+            return addedEntity.Id;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Application.Common.Interfaces;
+﻿using Domain.Repositories;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -9,11 +9,11 @@ namespace Application.TodoLists.Commands.UpdateTodoList
 {
     public class UpdateTodoListCommandValidator : AbstractValidator<UpdateTodoListCommand>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ITodoListRepository _repository;
 
-        public UpdateTodoListCommandValidator(IApplicationDbContext context)
+        public UpdateTodoListCommandValidator(ITodoListRepository repository)
         {
-            _context = context;
+            _repository = repository;
 
             RuleFor(v => v.Title)
                 .NotEmpty().WithMessage("Title is required.")
@@ -23,7 +23,7 @@ namespace Application.TodoLists.Commands.UpdateTodoList
 
         public async Task<bool> BeUniqueTitle(UpdateTodoListCommand model, string title, CancellationToken cancellationToken)
         {
-            return await _context.TodoLists
+            return await _repository.GetAll()
                 .Where(l => l.Id != model.Id)
                 .AllAsync(l => l.Title != title);
         }

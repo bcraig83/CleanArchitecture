@@ -1,5 +1,5 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
+﻿using Domain.Entities;
+using Domain.Repositories;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,11 +8,12 @@ namespace Application.TodoItems.Commands.CreateTodoItem
 {
     public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, int>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ITodoItemRepository _repository;
 
-        public CreateTodoItemCommandHandler(IApplicationDbContext context)
+        public CreateTodoItemCommandHandler(
+            ITodoItemRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public async Task<int> Handle(
@@ -25,11 +26,9 @@ namespace Application.TodoItems.Commands.CreateTodoItem
                 Title = request.Title
             };
 
-            _context.TodoItems.Add(entity);
+            var result = await _repository.AddAsync(entity);
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return entity.Id;
+            return result.Id;
         }
     }
 }
