@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Application.Common.Interfaces
 {
+    // TODO: I really don't like how EFCore is embedded into the application layer! Would like to abstract this away eventually...
     public interface IApplicationDbContext
     {
         DbSet<TodoList> TodoLists { get; set; }
