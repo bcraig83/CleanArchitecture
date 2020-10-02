@@ -8,16 +8,23 @@ namespace Application.FunctionalTests.Fakes
 {
     public class TodoItemRepositoryFake : ITodoItemRepository
     {
-        // Implement as testing requires...
-        private IDictionary<int, TodoItem> _dataStore;
+        private readonly IDictionary<int, TodoItem> _dataStore;
+        private static int id = 0;
 
         public TodoItemRepositoryFake()
         {
             _dataStore = new Dictionary<int, TodoItem>();
         }
 
+        // Implement as testing requires...
         public Task<TodoItem> AddAsync(TodoItem entity)
         {
+
+            if (entity.Id == 0)
+            {
+                entity.Id = id++;
+            }
+
             _dataStore.Add(entity.Id, entity);
             return Task.FromResult(entity);
         }
