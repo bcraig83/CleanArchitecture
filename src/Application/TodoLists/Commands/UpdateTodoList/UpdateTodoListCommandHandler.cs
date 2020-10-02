@@ -1,6 +1,6 @@
 ﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
 using Domain.Entities;
+using Domain.Repositories;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,16 +9,16 @@ namespace Application.TodoLists.Commands.UpdateTodoList
 {
     public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListCommand>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ITodoListRepository _repository;
 
-        public UpdateTodoListCommandHandler(IApplicationDbContext context)
+        public UpdateTodoListCommandHandler(ITodoListRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public async Task<Unit> Handle(UpdateTodoListCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _context.TodoLists.FindAsync(request.Id);
+            var entity = await _repository.FindByIdAsync(request.Id);
 
             if (entity == null)
             {
@@ -27,7 +27,7 @@ namespace Application.TodoLists.Commands.UpdateTodoList
 
             entity.Title = request.Title;
 
-            await _context.SaveChangesAsync(cancellationToken);
+            await _repository.UpdateAsync(entity);
 
             return Unit.Value;
         }

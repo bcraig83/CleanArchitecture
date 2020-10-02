@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Common.Interfaces
+namespace Infrastructure.Persistence
 {
     public interface IApplicationDbContext
     {
@@ -11,6 +11,6 @@ namespace Application.Common.Interfaces
 
         DbSet<TodoItem> TodoItems { get; set; }
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken());
     }
 }

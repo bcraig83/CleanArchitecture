@@ -1,6 +1,6 @@
 ﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
 using Domain.Entities;
+using Domain.Repositories;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,16 +9,17 @@ namespace Application.TodoItems.Commands.UpdateTodoItemDetail
 {
     public class UpdateTodoItemDetailCommandHandler : IRequestHandler<UpdateTodoItemDetailCommand>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ITodoItemRepository _repository;
 
-        public UpdateTodoItemDetailCommandHandler(IApplicationDbContext context)
+        public UpdateTodoItemDetailCommandHandler(
+            ITodoItemRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public async Task<Unit> Handle(UpdateTodoItemDetailCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _context.TodoItems.FindAsync(request.Id);
+            var entity = await _repository.FindByIdAsync(request.Id);
 
             if (entity == null)
             {
@@ -29,7 +30,7 @@ namespace Application.TodoItems.Commands.UpdateTodoItemDetail
             entity.Priority = request.Priority;
             entity.Note = request.Note;
 
-            await _context.SaveChangesAsync(cancellationToken);
+            await _repository.UpdateAsync(entity);
 
             return Unit.Value;
         }
