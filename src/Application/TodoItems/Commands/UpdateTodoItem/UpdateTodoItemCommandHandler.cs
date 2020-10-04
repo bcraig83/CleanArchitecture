@@ -28,7 +28,11 @@ namespace Application.TodoItems.Commands.UpdateTodoItem
                 throw new NotFoundException(nameof(TodoItem), request.Id);
             }
 
-            entity.Title = request.Title;
+            var requestTitle = request.Title;
+            if (requestTitle != null)
+            {
+                entity.Title = request.Title;
+            }
 
             if (request.Done == true)
             {

@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.TodoItems.Commands.UpdateTodoItem;
 using Domain.Entities;
+using Domain.Repositories;
 using Infrastructure.Persistence;
 using IntegrationTests.Fakes;
 using Shouldly;
@@ -24,7 +25,17 @@ namespace IntegrationTests.Features
                     recordedEmails.Count.ShouldBe(0);
                 });
 
-            "Given a command for a pre-existing TodoItem"
+            "And given the Todo item exists in the database"
+                .x(async () =>
+                {
+                    var todoItemRepo = (ITodoItemRepository)ServiceProvider.GetService(typeof(ITodoItemRepository));
+                    var todoItem = await todoItemRepo.FindByIdAsync(23);
+                    todoItem.ShouldNotBeNull();
+                    todoItem.Title.ShouldBe("Pick up paint");
+                    todoItem.IsDone.ShouldBeFalse();
+                });
+
+            "And given a command for a pre-existing TodoItem"
                 .x(() =>
                 {
                     command = new UpdateTodoItemCommand
