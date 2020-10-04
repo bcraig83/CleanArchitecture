@@ -1,11 +1,16 @@
-﻿using Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
 
 namespace IntegrationTests
 {
     public abstract class BaseInMemoryDatabaseTests
     {
+        protected IMediator Mediator;
+
+        protected BaseInMemoryDatabaseTests()
+        {
+            Mediator = (IMediator)DependencyInjection.Instance.ServiceProvider.GetService(typeof(IMediator));
+        }
+
         //protected DbContextOptions<ApplicationDbContext> ContextOptions { get; }
         //protected ServiceProvider ServiceProvider;
 

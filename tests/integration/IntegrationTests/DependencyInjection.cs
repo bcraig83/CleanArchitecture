@@ -1,4 +1,5 @@
 ﻿using Application;
+using Infrastructure.Identity;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,9 +9,7 @@ namespace IntegrationTests
     public class DependencyInjection
     {
         private static DependencyInjection _instance = null;
-
         private readonly IServiceCollection _services = null;
-
         public ServiceProvider ServiceProvider { get; private set; } = null;
 
         public static DependencyInjection Instance
@@ -29,16 +28,34 @@ namespace IntegrationTests
         {
             _services = new ServiceCollection();
 
-            _services.AddApplication();
-
-            _services.AddScoped(opt =>
-                new DbContextOptionsBuilder<ApplicationDbContext>()
-                    .UseInMemoryDatabase("TestDatabase")
-                    .Options);
+            AddApplication();
+            AddDatabase();
 
             // TODO: add additional dependencies as required....
 
             ServiceProvider = _services.BuildServiceProvider();
+        }
+
+        private void AddApplication()
+        {
+            _services.AddApplication();
+        }
+
+        private void AddDatabase()
+        {
+            _services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase("TestDatabase"));
+
+            _services.AddScoped<IApplicationDbContext>(provider =>
+                provider.GetService<ApplicationDbContext>());
+
+            //_services
+            //    .AddDefaultIdentity<ApplicationUser>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //_services
+            //    .AddIdentityServer()
+            //    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
         }
     }
 }
