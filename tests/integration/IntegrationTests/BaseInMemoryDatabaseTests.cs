@@ -22,7 +22,7 @@ namespace IntegrationTests
 
         private void Seed()
         {
-            using var context = (ApplicationDbContext)ServiceProvider.GetService(typeof(ApplicationDbContext));
+            var context = (ApplicationDbContext)ServiceProvider.GetService(typeof(ApplicationDbContext));
 
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();

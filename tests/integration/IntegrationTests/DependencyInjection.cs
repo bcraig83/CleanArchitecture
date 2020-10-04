@@ -1,9 +1,12 @@
 ﻿using Application;
 using Application.Common.Interfaces;
+using Domain.Repositories;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Repositories;
 using IntegrationTests.Fakes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 
 namespace IntegrationTests
 {
@@ -12,6 +15,8 @@ namespace IntegrationTests
         private static DependencyInjection _instance = null;
         private readonly IServiceCollection _services = null;
         public ServiceProvider ServiceProvider { get; private set; } = null;
+
+        public Mock<IIdentityService> IdentityServiceMock = new Mock<IIdentityService>();
 
         public static DependencyInjection Instance
         {
@@ -29,12 +34,17 @@ namespace IntegrationTests
         {
             _services = new ServiceCollection();
 
+            _services.AddLogging();
+
             AddApplication();
             AddDatabase();
 
             // TODO: add additional dependencies as required....
-            _services.AddScoped<ICurrentUserService, CurrentUserServiceFake>();
-            _services.AddScoped<IDateTime, DateTimeFake>();
+            // TODO: probably should just use mocks for these!
+            _services.AddScoped<ICurrentUserService, CurrentUserServiceStub>();
+            _services.AddScoped<IDateTime, DateTimeStub>();
+            _services.AddScoped<IEmailSender, EmailSenderSpy>();
+            _services.AddScoped(x => IdentityServiceMock.Object);
 
             ServiceProvider = _services.BuildServiceProvider();
         }
@@ -52,13 +62,8 @@ namespace IntegrationTests
             _services.AddScoped<IApplicationDbContext>(provider =>
                 provider.GetService<ApplicationDbContext>());
 
-            //_services
-            //    .AddDefaultIdentity<ApplicationUser>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            //_services
-            //    .AddIdentityServer()
-            //    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            _services.AddTransient<ITodoItemRepository, TodoItemRepository>();
+            _services.AddTransient<ITodoListRepository, TodoListRepository>();
         }
     }
 }
