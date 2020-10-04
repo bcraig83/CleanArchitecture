@@ -1,6 +1,7 @@
 ﻿using Application;
-using Infrastructure.Identity;
+using Application.Common.Interfaces;
 using Infrastructure.Persistence;
+using IntegrationTests.Fakes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -32,6 +33,8 @@ namespace IntegrationTests
             AddDatabase();
 
             // TODO: add additional dependencies as required....
+            _services.AddScoped<ICurrentUserService, CurrentUserServiceFake>();
+            _services.AddScoped<IDateTime, DateTimeFake>();
 
             ServiceProvider = _services.BuildServiceProvider();
         }
