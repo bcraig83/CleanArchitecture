@@ -38,12 +38,16 @@ namespace Infrastructure.Persistence
         public DbSet<TodoList> TodoLists { get; set; }
         public DbSet<TodoItem> TodoItems { get; set; }
 
-
         // Don't like how much bespoke, non EF Core code is in here. Makes it difficult to test.
         // Also feels like a violation of single responsibility.
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             var entries = ChangeTracker.Entries<BaseEntity>();
+
+            var entitiesWithEvents = entries
+                .Select(e => e.Entity)
+                .Where(e => e.Events.Any())
+                .ToArray();
 
             foreach (var entry in entries)
             {
@@ -69,11 +73,6 @@ namespace Infrastructure.Persistence
             }
 
             // dispatch events only if save was successful
-            var entitiesWithEvents = entries
-                .Select(e => e.Entity)
-                .Where(e => e.Events.Any())
-                .ToArray();
-
             foreach (var entity in entitiesWithEvents)
             {
                 var events = entity.Events.ToArray();
