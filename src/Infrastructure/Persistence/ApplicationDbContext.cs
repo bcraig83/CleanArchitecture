@@ -38,6 +38,9 @@ namespace Infrastructure.Persistence
         public DbSet<TodoList> TodoLists { get; set; }
         public DbSet<TodoItem> TodoItems { get; set; }
 
+
+        // Don't like how much bespoke, non EF Core code is in here. Makes it difficult to test.
+        // Also feels like a violation of single responsibility.
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             var entries = ChangeTracker.Entries<BaseEntity>();
