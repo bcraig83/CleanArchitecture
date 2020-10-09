@@ -2,13 +2,13 @@
 
 ![.NET Core](https://github.com/bcraig83/CleanArchitecture/workflows/.NET%20Core/badge.svg)
 
-TODO: this readme is a work-in-progress, mainly because the code base is also a work-in-progress! Note to self: make sure readme and code base are in sync by the time I'm "done" with this repo.
+TODO: this readme is a work-in-progress, mainly because the code base is also a work-in-progress!
 
 ## How to use this repository
 
 The master branch contains a sample application built in the style of Clean Architecture. Use this as a reference to build out your own projects.
 
-If you want a fresh starting point, then fork this repository and start from one of the "StartHere" branches. The latest "StartHere" branch can be found under "StartHere/latest", but you should be able to find all previous versions under the same branch directory (for example, v1.0.0 is found under "StartHere/v1.1.0").
+If you want a fresh starting point, then fork this repository and start from one of the "StartHere" branches. The latest "StartHere" branch can be found under "StartHere/latest", but you should be able to find all previous versions under the same branch directory (for example, v1.1.0 is found under "StartHere/v1.1.0").
 
 This repo is based on [this](https://github.com/jasontaylordev/CleanArchitecture).
 
@@ -22,8 +22,8 @@ This repo is based on [this](https://github.com/jasontaylordev/CleanArchitecture
 
 ### Domain
 
-- Added a solution directory for events, but have not added any examples yet. There's a little bleed with [this repository](https://github.com/ardalis/CleanArchitecture).
-- Have (controversially) add some repository interfaces. The concept of repositories is purely to allow decoupling of database from application when writing functional tests. I don't think the concept itself is controversial, but where to place these interfaces might be. It could be argued they belong in the application layer. I've gone with domain, purely because so many enterprise applications have the domain in the database. 
+- Added a solution directory for events. There's a little bleed here with [this repository](https://github.com/ardalis/CleanArchitecture).
+- Have (controversially) added some repository interfaces. The concept of repositories is purely to allow decoupling of database from application when writing functional tests. I don't think the concept itself is controversial, but where to place these interfaces might be. It could be argued they belong in the application layer. I've gone with domain, purely because so many enterprise applications have their domain stored in the database. 
 - Added some domain-level unit tests.
 - Some very minor code tidying.
 
