@@ -1,6 +1,5 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Common;
-using Domain.Entities;
 using IdentityServer4.EntityFramework.Options;
 using Infrastructure.Identity;
 using MediatR;
@@ -34,9 +33,6 @@ namespace Infrastructure.Persistence
             _dateTime = dateTime;
             _mediator = mediator;
         }
-
-        public DbSet<TodoList> TodoLists { get; set; }
-        public DbSet<TodoItem> TodoItems { get; set; }
 
         // Don't like how much bespoke, non EF Core code is in here. Makes it difficult to test.
         // Also feels like a violation of single responsibility.

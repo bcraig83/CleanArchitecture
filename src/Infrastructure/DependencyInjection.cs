@@ -1,10 +1,7 @@
 ﻿using Application.Common.Interfaces;
-using Domain.Repositories;
 using Infrastructure.Email;
-using Infrastructure.Files;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
-using Infrastructure.Persistence.Repositories;
 using Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -45,7 +42,6 @@ namespace Infrastructure
                 .AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IIdentityService, IdentityService>();
@@ -56,9 +52,8 @@ namespace Infrastructure
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            services.AddTransient<ITodoItemRepository, TodoItemRepository>();
-            services.AddTransient<ITodoListRepository, TodoListRepository>();
-
+            // Add your own repositories, e.g:
+            //services.AddTransient<ITodoItemRepository, TodoItemRepository>();
             return services;
         }
     }
