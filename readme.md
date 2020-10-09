@@ -57,3 +57,9 @@ This repo is based on [this](https://github.com/jasontaylordev/CleanArchitecture
     - `unit`
         - Pretty much standard unit tests.
         - Use mocking library (moq) but avoid using it for verification.
+
+## How to use this repsitory
+
+The master branch contains a sample application built in the style of Clean Architecture. Use this as a reference to build out your own projects.
+
+If you want a fresh starting point, then fork this repository and start from one of the "StartHere" branches. The latest "StartHere" branch can be found under "StartHere/latest", but you should be able to find all previous versions under the same branch directory (for example, v1.0.0 is found under "StartHere/v1.1.0").
