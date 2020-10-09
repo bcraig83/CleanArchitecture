@@ -4,12 +4,11 @@
 
 TODO: this readme is a work-in-progress, mainly because the code base is also a work-in-progress! Note to self: make sure readme and code base are in sync by the time I'm "done" with this repo.
 
-## How to use this repsitory
+## How to use this repository
 
 The master branch contains a sample application built in the style of Clean Architecture. Use this as a reference to build out your own projects.
 
 If you want a fresh starting point, then fork this repository and start from one of the "StartHere" branches. The latest "StartHere" branch can be found under "StartHere/latest", but you should be able to find all previous versions under the same branch directory (for example, v1.0.0 is found under "StartHere/v1.1.0").
-
 
 This repo is based on [this](https://github.com/jasontaylordev/CleanArchitecture).
 
@@ -19,21 +18,26 @@ This repo is based on [this](https://github.com/jasontaylordev/CleanArchitecture
 
 - All projects have been upgraded to use dot net core 3.1.
 - In general, I've migrated all dependencies to the latest-and-greatest, unless doing so included breaking changes.
-- Included an eventing model, which allows us to created events and handlers. These can be triggered when an entity is written back to the database. So in other words, push notifications of changes to the state in the persistance layer.
+- Implemented an eventing model, which allows us to created events and handlers. These can be triggered when an entity is written back to the database. So in other words, push notifications of changes to the state in the persistance layer.
 
 ### Domain
 
 - Added a solution directory for events, but have not added any examples yet. There's a little bleed with [this repository](https://github.com/ardalis/CleanArchitecture).
+- Have (controversially) add some repository interfaces. The concept of repositories is purely to allow decoupling of database from application when writing functional tests. I don't think the concept itself is controversial, but where to place these interfaces might be. It could be argued they belong in the application layer. I've gone with domain, purely because so many enterprise applications have the domain in the database. 
+- Added some domain-level unit tests.
 - Some very minor code tidying.
 
 ### Application
 
-- Added some additional unit tests to the unit test project, just to show how you might unit test some of the individual classes within the Application layer.
 - Upgraded dependencies to the latest and greatest, with the exception of FluentValidation, because the latest version of that is a major version upgrade, so it includes breaking changes that would need to be rewritten here.
+- Added some additional unit tests to the unit test project, just to show how you might unit test some of the individual classes within the Application layer.
 - Some minor personal preferences :)
     - Inside the commands/queries, I've boxed off model classes in a separate directory.
     - I have created a separate class for the command/query handlers. It's still in the same directory, so I think it still fulfills the concept of having everything related together. I just don't like two classes in one class file :)
+    - I've created a directory for EventHandlers. These will be invoked when domain events are fired. See `TodoItemCompletedEventEmailHandler` for a nice example.
 - Some very minor code tidying, such as failing fast out of a method when we know a failure condition has been met.
+- I've added application level functional tests.
+    - Crucially, these tests DO NOT use a database. Instead, I'm currently using a stubbed version, under the "Fakes" directory. There's an agrument here to just using a mocking library like Moq, which I'm finding increasingly hard to ignore...
 
 ### Infrastructure
 
@@ -58,9 +62,13 @@ This repo is based on [this](https://github.com/jasontaylordev/CleanArchitecture
         - I would expect to use 'real' instances where possible.
         - Potentially have stubs or spies at the boundaries. Specifically where infrastructure pieces are called.
         - In fact, we can probably say that these functional tests will NOT test the infrastructure layer at all (open to debate!)
+        - The database is stubbed out, with the help of the repository pattern. Currently using hand-crafted fakes, but open to just using Moq.
     - `integration`
         - These specifically DO test the infrastructure layer.
-        - They ensure that we interact with various external entities as expected. This is admittedly a little vague and probably requires some further thought...
+        - I'm using an in-memory database for these tests.
+        - They still follow a BDD style for readability.
+        - Any future tests/features should inherit from `BaseInMemoryDatabaseTests`.
+        - This abstract class has an overridable method called `SeedFeatureSpecificData`. This should be used to seed the database if required for a feature. You can see an example of this under `EmailNotificationFeature`.
     - `unit`
         - Pretty much standard unit tests.
         - Use mocking library (moq) but avoid using it for verification.
