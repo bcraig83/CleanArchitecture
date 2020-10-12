@@ -16,7 +16,6 @@ namespace Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        // TODO: feels like alot of the basic CRUD stuff could go into a base repository class?
         public async Task<TodoItem> AddAsync(TodoItem entity)
         {
             var result = _context.TodoItems

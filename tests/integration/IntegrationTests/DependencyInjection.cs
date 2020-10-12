@@ -39,8 +39,8 @@ namespace IntegrationTests
             AddApplication();
             AddDatabase();
 
-            // TODO: add additional dependencies as required....
-            // TODO: probably should just use mocks for these!
+            // Add additional dependencies as required....
+            // Could just use mocks for these, I'm currently undecided as to which approach is best...
             _services.AddScoped<ICurrentUserService, CurrentUserServiceStub>();
             _services.AddScoped<IDateTime, DateTimeStub>();
             _services.AddScoped<IEmailSender, EmailSenderSpy>();

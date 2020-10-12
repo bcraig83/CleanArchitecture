@@ -27,7 +27,7 @@ namespace IntegrationTests
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            // TODO: First, this is where you might seed standard reference data in the database.
+            // First, this is where you might seed standard reference data in the database.
             // <standard_code_here>
 
             SeedFeatureSpecificData(context);
