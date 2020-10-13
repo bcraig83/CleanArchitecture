@@ -22,7 +22,7 @@ namespace WebApi.IntegrationTests
                 List = list,
                 ListId = 1,
                 Priority = PriorityLevel.Medium,
-                Reminder = DateTime.Parse("24/03/2021"),
+                Reminder = DateTime.Now,
                 Title = "Buy bread"
             };
 
