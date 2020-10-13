@@ -19,7 +19,7 @@ namespace WebApi.IntegrationTests
                     .AddEntityFrameworkInMemoryDatabase()
                     .BuildServiceProvider();
 
-                // Add a database context (AppDbContext) using an in-memory database for testing.
+                // Add a database context (ApplicationDbContext) using an in-memory database for testing.
                 services.AddDbContext<ApplicationDbContext>(options =>
                 {
                     options.UseInMemoryDatabase("InMemoryAppDb");
@@ -42,7 +42,7 @@ namespace WebApi.IntegrationTests
 
                     try
                     {
-                        // TODO: Seed the database with some specific test data.
+                        // Seed the database with some specific test data.
                         SeedData.PopulateTestData(appDb);
                     }
                     catch (Exception ex)

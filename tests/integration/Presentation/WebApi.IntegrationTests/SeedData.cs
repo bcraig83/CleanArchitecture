@@ -10,8 +10,6 @@ namespace WebApi.IntegrationTests
     {
         public static void PopulateTestData(ApplicationDbContext dbContext)
         {
-            // TODO: seed the db...
-
             var list = new TodoList
             {
                 Colour = "Blue",
