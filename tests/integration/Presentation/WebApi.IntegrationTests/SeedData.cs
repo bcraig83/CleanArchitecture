@@ -1,8 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Enums;
-using Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
+﻿using Infrastructure.Persistence;
 
 namespace WebApi.IntegrationTests
 {
@@ -10,29 +6,31 @@ namespace WebApi.IntegrationTests
     {
         public static void PopulateTestData(ApplicationDbContext dbContext)
         {
-            var list = new TodoList
-            {
-                Colour = "Blue",
-                Id = 1,
-                Title = "Monday List"
-            };
+            // TODO: popualate data as required, e.g.
 
-            var todoItem = new TodoItem
-            {
-                List = list,
-                ListId = 1,
-                Priority = PriorityLevel.Medium,
-                Reminder = DateTime.Now,
-                Title = "Buy bread"
-            };
+            //var list = new TodoList
+            //{
+            //    Colour = "Blue",
+            //    Id = 1,
+            //    Title = "Monday List"
+            //};
 
-            list.Items = new List<TodoItem>
-            {
-                todoItem
-            };
+            //var todoItem = new TodoItem
+            //{
+            //    List = list,
+            //    ListId = 1,
+            //    Priority = PriorityLevel.Medium,
+            //    Reminder = DateTime.Now,
+            //    Title = "Buy bread"
+            //};
 
-            dbContext.TodoItems.Add(todoItem);
-            dbContext.TodoLists.Add(list);
+            //list.Items = new List<TodoItem>
+            //{
+            //    todoItem
+            //};
+
+            //dbContext.TodoItems.Add(todoItem);
+            //dbContext.TodoLists.Add(list);
 
             dbContext.SaveChanges();
         }

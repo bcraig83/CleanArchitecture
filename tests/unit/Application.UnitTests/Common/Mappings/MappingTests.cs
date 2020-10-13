@@ -1,8 +1,5 @@
 ﻿using Application.Common.Mappings;
-using Application.TodoLists.Queries.GetTodos.Models;
 using AutoMapper;
-using Domain.Entities;
-using System;
 using Xunit;
 
 namespace Application.UnitTests.Common.Mappings
@@ -26,16 +23,6 @@ namespace Application.UnitTests.Common.Mappings
         public void ShouldHaveValidConfiguration()
         {
             _configuration.AssertConfigurationIsValid();
-        }
-
-        [Theory]
-        [InlineData(typeof(TodoList), typeof(TodoListDto))]
-        [InlineData(typeof(TodoItem), typeof(TodoItemDto))]
-        public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
-        {
-            var instance = Activator.CreateInstance(source);
-
-            _mapper.Map(instance, source, destination);
         }
     }
 }

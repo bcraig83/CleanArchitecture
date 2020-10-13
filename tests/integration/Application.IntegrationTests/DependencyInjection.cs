@@ -1,8 +1,6 @@
 ﻿using Application;
 using Application.Common.Interfaces;
-using Domain.Repositories;
 using Infrastructure.Persistence;
-using Infrastructure.Persistence.Repositories;
 using IntegrationTests.Fakes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -62,8 +60,8 @@ namespace IntegrationTests
             _services.AddScoped<IApplicationDbContext>(provider =>
                 provider.GetService<ApplicationDbContext>());
 
-            _services.AddTransient<ITodoItemRepository, TodoItemRepository>();
-            _services.AddTransient<ITodoListRepository, TodoListRepository>();
+            // Add your repositories here...
+            //_services.AddTransient<ITodoItemRepository, TodoItemRepository>();
         }
     }
 }

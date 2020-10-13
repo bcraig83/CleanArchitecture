@@ -1,8 +1,4 @@
-﻿using Application.TodoLists.Queries.GetTodos.Models;
-using Newtonsoft.Json;
-using Shouldly;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -21,37 +17,39 @@ namespace WebApi.IntegrationTests.Controllers
         [Fact]
         public async Task ShouldGetTodos_WhenGetIsCalled()
         {
-            // The endpoint or route of the controller action.
-            var httpResponse = await _client.GetAsync("/api/TodoLists");
+            // TODO: add any required API level integration tests, e.g.:
 
-            // Must be successful.
-            httpResponse.EnsureSuccessStatusCode();
+            //// The endpoint or route of the controller action.
+            //var httpResponse = await _client.GetAsync("/api/TodoLists");
 
-            // Deserialize and examine results.
-            var stringResponse = await httpResponse.Content.ReadAsStringAsync();
-            var todosVm = JsonConvert.DeserializeObject<TodosVm>(stringResponse);
+            //// Must be successful.
+            //httpResponse.EnsureSuccessStatusCode();
 
-            todosVm.ShouldNotBeNull();
-            todosVm.PriorityLevels.ShouldNotBeNull();
+            //// Deserialize and examine results.
+            //var stringResponse = await httpResponse.Content.ReadAsStringAsync();
+            //var todosVm = JsonConvert.DeserializeObject<TodosVm>(stringResponse);
 
-            var lists = todosVm.Lists;
-            lists.ShouldNotBeNull();
-            lists.Count.ShouldBe(1);
+            //todosVm.ShouldNotBeNull();
+            //todosVm.PriorityLevels.ShouldNotBeNull();
 
-            var list = lists.First();
-            list.ShouldNotBeNull();
-            list.Title.ShouldBe("Monday List");
+            //var lists = todosVm.Lists;
+            //lists.ShouldNotBeNull();
+            //lists.Count.ShouldBe(1);
 
-            var items = list.Items;
-            items.ShouldNotBeNull();
-            items.Count.ShouldBe(1);
+            //var list = lists.First();
+            //list.ShouldNotBeNull();
+            //list.Title.ShouldBe("Monday List");
 
-            var item = items.First();
-            item.Done.ShouldBeFalse();
-            item.Id.ShouldBe(1);
-            item.ListId.ShouldBe(1);
-            item.Priority.ShouldBe(2);
-            item.Title.ShouldBe("Buy bread");
+            //var items = list.Items;
+            //items.ShouldNotBeNull();
+            //items.Count.ShouldBe(1);
+
+            //var item = items.First();
+            //item.Done.ShouldBeFalse();
+            //item.Id.ShouldBe(1);
+            //item.ListId.ShouldBe(1);
+            //item.Priority.ShouldBe(2);
+            //item.Title.ShouldBe("Buy bread");
         }
     }
 }
