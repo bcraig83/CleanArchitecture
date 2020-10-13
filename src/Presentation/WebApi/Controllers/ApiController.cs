@@ -4,10 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
-    // TODO: should this class be abstract?
     [Route("api/[controller]")]
     [ApiController]
-    public class ApiController : ControllerBase
+    public abstract class ApiController : ControllerBase
     {
         private IMediator _mediator;
 
