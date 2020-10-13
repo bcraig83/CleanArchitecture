@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Repositories
 {
-    // TODO: all this code needs to be improved to provide better negative path funtionality, exception handling, etc.
     public class TodoItemRepository : ITodoItemRepository
     {
         private readonly IApplicationDbContext _context;

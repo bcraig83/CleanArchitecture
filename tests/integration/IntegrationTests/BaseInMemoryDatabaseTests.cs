@@ -8,7 +8,6 @@ namespace IntegrationTests
     {
         protected IMediator Mediator;
 
-        // TODO: not sure if this needs to be a member variable? We'll see...
         protected ServiceProvider ServiceProvider;
 
         protected BaseInMemoryDatabaseTests()
