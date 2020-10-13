@@ -8,7 +8,6 @@ namespace IntegrationTests
     {
         protected IMediator Mediator;
 
-        // TODO: not sure if this needs to be a member variable? We'll see...
         protected ServiceProvider ServiceProvider;
 
         protected BaseInMemoryDatabaseTests()
@@ -27,7 +26,7 @@ namespace IntegrationTests
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            // TODO: First, this is where you might seed standard reference data in the database.
+            // First, this is where you might seed standard reference data in the database.
             // <standard_code_here>
 
             SeedFeatureSpecificData(context);

@@ -12,7 +12,8 @@ namespace Infrastructure.Email
             string subject,
             string body)
         {
-            // TODO: implement this.
+            // This could be implemented by another developer, or even a separate team. This architecture
+            // supports breaking down work very nicely
             throw new NotImplementedException();
         }
     }

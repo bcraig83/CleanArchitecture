@@ -36,8 +36,10 @@ namespace Infrastructure.Persistence
 
         private static IList<TodoItem> GetTodoItems()
         {
-            // TODO: have a think about this. I think it's ok, because this is setting up seed data.
-            // In a real system, a TodoItem could never be created and set to done in one go.
+            // This is creating an item, and then immediatly setting it as complete.
+            // I think it's ok, because this is setting up seed data.
+            // In a real system, a TodoItem could never be created and set to done in one go, hence
+            // why the domain object won't let you set the IsDone property directly.
             var apples = new TodoItem { Title = "Apples" };
             apples.MarkComplete();
 

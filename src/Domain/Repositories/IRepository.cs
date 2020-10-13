@@ -6,7 +6,7 @@ namespace Domain.Repositories
 {
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {
-        // TODO: fill out this interface as we go along.
+        // Fill out this interface as we go along.
 
         IQueryable<TEntity> GetAll();
 
