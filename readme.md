@@ -2,15 +2,20 @@
 
 ![.NET Core](https://github.com/bcraig83/CleanArchitecture/workflows/.NET%20Core/badge.svg)
 
-TODO: this readme is a work-in-progress, mainly because the code base is also a work-in-progress!
+This repo is based on [this](https://github.com/jasontaylordev/CleanArchitecture), with some tweaks.
 
 ## How to use this repository
 
 The master branch contains a sample application built in the style of Clean Architecture. Use this as a reference to build out your own projects.
 
-If you want a fresh starting point, then fork this repository and start from one of the "StartHere" branches. The latest "StartHere" branch can be found under "StartHere/latest", but you should be able to find all previous versions under the same branch directory (for example, v1.1.0 is found under "StartHere/v1.1.0").
+If you want a fresh starting point:
 
-This repo is based on [this](https://github.com/jasontaylordev/CleanArchitecture).
+- Download a tagged "StartHere" release as a zip file (e.g. https://github.com/bcraig83/CleanArchitecture/releases/tag/v1.2.0-StartHere)
+- Unzip the file.
+- Rename the solution to your own solution name.
+- Write some code!
+
+The latest "StartHere" branch can be found under "StartHere/latest", but you should be able to find all previous versions under the same branch directory (for example, v1.1.0 is found under "StartHere/v1.1.0").
 
 ## What's tweaked
 
