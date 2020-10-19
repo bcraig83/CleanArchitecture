@@ -9,7 +9,7 @@ namespace WebApi.Controllers
     public class TodoListsController : ApiController
     {
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TodosVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<TodosVm>> Get()
         {
             return await Mediator.Send(new GetTodosQuery());
