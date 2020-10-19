@@ -1,4 +1,5 @@
-﻿using Application.TodoLists.Queries.GetTodos;
+﻿using Application.TodoLists.Commands.CreateTodoList;
+using Application.TodoLists.Queries.GetTodos;
 using Application.TodoLists.Queries.GetTodos.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,13 @@ namespace WebApi.Controllers
         public async Task<ActionResult<TodosVm>> Get()
         {
             return await Mediator.Send(new GetTodosQuery());
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> Create(
+             [FromBody] CreateTodoListCommand command)
+        {
+            return await Mediator.Send(command);
         }
     }
 }
