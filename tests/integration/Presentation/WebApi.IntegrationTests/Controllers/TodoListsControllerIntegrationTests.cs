@@ -1,13 +1,16 @@
-﻿using Application.TodoLists.Queries.GetTodos.Models;
+﻿using Application.TodoItems.Commands.CreateTodoItem;
+using Application.TodoLists.Queries.GetTodos.Models;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace WebApi.IntegrationTests.Controllers
 {
+    // TODO: these should be xbehave tests...
     public class TodoListsControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly HttpClient _client;
@@ -52,6 +55,22 @@ namespace WebApi.IntegrationTests.Controllers
             item.ListId.ShouldBe(1);
             item.Priority.ShouldBe(2);
             item.Title.ShouldBe("Buy bread");
+        }
+
+        [Fact]
+        public async Task ShouldCreateTodoList_WhenValidListIsPosted()
+        {
+            // The endpoint or route of the controller action.
+            var command = new CreateTodoItemCommand
+            {
+                Title = "Hello world list"
+            };
+
+            var stringContent = new StringContent(JsonConvert.SerializeObject(command), Encoding.UTF8, "application/json");
+            var httpResponse = await _client.PostAsync("/api/TodoLists", stringContent);
+
+            // Must be successful.
+            httpResponse.EnsureSuccessStatusCode();
         }
     }
 }
