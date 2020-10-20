@@ -1,15 +1,20 @@
-﻿using Application.TodoLists.Queries.GetTodos.Models;
+﻿using Application.TodoItems.Commands.CreateTodoItem;
+using Application.TodoItems.Commands.UpdateTodoItem;
+using Application.TodoLists.Queries.GetTodos.Models;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
+using System.Text;
+using Xbehave;
 using Xunit;
 
 namespace WebApi.IntegrationTests.Controllers
 {
     public class TodoListsControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
+        private const string RequestUri = "/api/TodoLists";
+
         private readonly HttpClient _client;
 
         public TodoListsControllerIntegrationTests(
@@ -18,40 +23,117 @@ namespace WebApi.IntegrationTests.Controllers
             _client = factory.CreateClient();
         }
 
-        [Fact]
-        public async Task ShouldGetTodos_WhenGetIsCalled()
+        [Scenario]
+        public void ShouldHandleCrudOperations()
         {
-            // The endpoint or route of the controller action.
-            var httpResponse = await _client.GetAsync("/api/TodoLists");
+            "Given that there are initially no lists setup in the system"
+                .x(async () =>
+                {
+                    var httpResponse = await _client.GetAsync(RequestUri);
 
-            // Must be successful.
-            httpResponse.EnsureSuccessStatusCode();
+                    httpResponse.EnsureSuccessStatusCode();
 
-            // Deserialize and examine results.
-            var stringResponse = await httpResponse.Content.ReadAsStringAsync();
-            var todosVm = JsonConvert.DeserializeObject<TodosVm>(stringResponse);
+                    var stringResponse = await httpResponse.Content.ReadAsStringAsync();
+                    var todosVm = JsonConvert.DeserializeObject<TodosVm>(stringResponse);
 
-            todosVm.ShouldNotBeNull();
-            todosVm.PriorityLevels.ShouldNotBeNull();
+                    var lists = todosVm.Lists;
+                    lists.Count.ShouldBe(0);
+                });
 
-            var lists = todosVm.Lists;
-            lists.ShouldNotBeNull();
-            lists.Count.ShouldBe(1);
+            "When we create a valid list"
+                .x(async () =>
+                {
+                    var command = new CreateTodoItemCommand
+                    {
+                        Title = "Hello world list"
+                    };
 
-            var list = lists.First();
-            list.ShouldNotBeNull();
-            list.Title.ShouldBe("Monday List");
+                    var stringContent = new StringContent(
+                        JsonConvert.SerializeObject(command),
+                        Encoding.UTF8,
+                        "application/json");
 
-            var items = list.Items;
-            items.ShouldNotBeNull();
-            items.Count.ShouldBe(1);
+                    var httpResponse = await _client.PostAsync(
+                        RequestUri, stringContent);
 
-            var item = items.First();
-            item.Done.ShouldBeFalse();
-            item.Id.ShouldBe(1);
-            item.ListId.ShouldBe(1);
-            item.Priority.ShouldBe(2);
-            item.Title.ShouldBe("Buy bread");
+                    httpResponse.EnsureSuccessStatusCode();
+                });
+
+            "Then the list should be retrievable from the system"
+                   .x(async () =>
+                   {
+                       var httpResponse = await _client.GetAsync(RequestUri);
+
+                       httpResponse.EnsureSuccessStatusCode();
+
+                       var stringResponse = await httpResponse.Content.ReadAsStringAsync();
+                       var todosVm = JsonConvert.DeserializeObject<TodosVm>(stringResponse);
+
+                       var lists = todosVm.Lists;
+                       lists.Count.ShouldBe(1);
+
+                       var list = lists.First();
+                       list.Title.ShouldBe("Hello world list");
+                   });
+
+            "When we update that list with a different title"
+                .x(async () =>
+                {
+                    var command = new UpdateTodoItemCommand
+                    {
+                        Id = 1,
+                        Title = "Hello List Number 2"
+                    };
+
+                    var stringContent = new StringContent(
+                        JsonConvert.SerializeObject(command),
+                        Encoding.UTF8,
+                        "application/json");
+
+                    var httpResponse = await _client.PutAsync(
+                        RequestUri, stringContent);
+
+                    httpResponse.EnsureSuccessStatusCode();
+                });
+
+            "Then the list should have been updated in the system"
+                .x(async () =>
+                {
+                    var httpResponse = await _client.GetAsync(RequestUri);
+
+                    httpResponse.EnsureSuccessStatusCode();
+
+                    var stringResponse = await httpResponse.Content.ReadAsStringAsync();
+                    var todosVm = JsonConvert.DeserializeObject<TodosVm>(stringResponse);
+
+                    var lists = todosVm.Lists;
+                    lists.Count.ShouldBe(1);
+
+                    var list = lists.First();
+                    list.Title.ShouldBe("Hello List Number 2");
+                });
+
+            "When we delete that list"
+                .x(async () =>
+                {
+                    var httpResponse = await _client.DeleteAsync(RequestUri + "/1");
+
+                    httpResponse.EnsureSuccessStatusCode();
+                });
+
+            "Then the list should have been removed from the system"
+                .x(async () =>
+                {
+                    var httpResponse = await _client.GetAsync(RequestUri);
+
+                    httpResponse.EnsureSuccessStatusCode();
+
+                    var stringResponse = await httpResponse.Content.ReadAsStringAsync();
+                    var todosVm = JsonConvert.DeserializeObject<TodosVm>(stringResponse);
+
+                    var lists = todosVm.Lists;
+                    lists.Count.ShouldBe(0);
+                });
         }
     }
 }

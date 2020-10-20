@@ -8,7 +8,7 @@ namespace Application.TodoItems.Commands.CreateTodoItem
         {
             RuleFor(v => v.Title)
                 .MaximumLength(200)
-                .NotEmpty();
+                .NotEmpty().WithMessage("Title field cannot be empty");
         }
     }
 }
