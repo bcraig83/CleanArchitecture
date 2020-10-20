@@ -1,4 +1,6 @@
 ﻿using Application.TodoLists.Commands.CreateTodoList;
+using Application.TodoLists.Commands.DeleteTodoList;
+using Application.TodoLists.Commands.UpdateTodoList;
 using Application.TodoLists.Queries.GetTodos;
 using Application.TodoLists.Queries.GetTodos.Models;
 using FluentValidation;
@@ -27,7 +29,7 @@ namespace WebApi.Controllers
              [FromBody] CreateTodoListCommand command)
         {
             int result;
-            
+
             try
             {
                 result = await Mediator.Send(command);
@@ -38,6 +40,34 @@ namespace WebApi.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpPut]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Update(
+            [FromBody] UpdateTodoListCommand command)
+        {
+            try
+            {
+                await Mediator.Send(command);
+            }
+            catch (ValidationException ve)
+            {
+                return BadRequest(ve.Message);
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await Mediator.Send(new DeleteTodoListCommand { Id = id });
+
+            return NoContent();
         }
     }
 }
