@@ -1,6 +1,7 @@
 ﻿using Application.TodoItems.Commands.CreateTodoItem;
 using Application.TodoItems.Commands.UpdateTodoItem;
 using Application.TodoLists.Queries.GetTodos.Models;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Linq;
@@ -9,16 +10,16 @@ using System.Text;
 using Xbehave;
 using Xunit;
 
-namespace WebApi.IntegrationTests.Controllers
+namespace WebApi.IntegrationTests.Features
 {
-    public class TodoListsControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
+    public class TodoListCrudFeatures : IClassFixture<WebApplicationFactory<Startup>>
     {
         private const string RequestUri = "/api/TodoLists";
 
         private readonly HttpClient _client;
 
-        public TodoListsControllerIntegrationTests(
-            CustomWebApplicationFactory<Startup> factory)
+        public TodoListCrudFeatures(
+            WebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
