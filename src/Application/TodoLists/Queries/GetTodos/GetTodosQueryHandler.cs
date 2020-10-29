@@ -4,7 +4,6 @@ using AutoMapper.QueryableExtensions;
 using Domain.Enums;
 using Domain.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading;
@@ -32,10 +31,11 @@ namespace Application.TodoLists.Queries.GetTodos
                     .Select(p => new PriorityLevelDto { Value = (int)p, Name = p.ToString() })
                     .ToList();
 
-            var lists = await _repository.GetAll()
+            var lists = (await _repository.GetAllAsync())
+                    .AsQueryable()
                     .ProjectTo<TodoListDto>(_mapper.ConfigurationProvider)
                     .OrderBy(t => t.Title)
-                    .ToListAsync(cancellationToken);
+                    .ToList();
 
             var result = new TodosVm
             {

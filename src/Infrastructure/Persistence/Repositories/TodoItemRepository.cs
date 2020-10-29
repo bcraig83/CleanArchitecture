@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,9 +33,10 @@ namespace Infrastructure.Persistence.Repositories
             return result;
         }
 
-        public IQueryable<TodoItem> GetAll()
+        public Task<IList<TodoItem>> GetAllAsync()
         {
-            return _context.TodoItems;
+            return Task.FromResult((IList<TodoItem>)
+                _context.TodoItems.ToList());
         }
 
         public async Task<TodoItem> RemoveAsync(TodoItem entity)

@@ -1,6 +1,6 @@
 ﻿using Domain.Repositories;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,8 +23,8 @@ namespace Application.TodoLists.Commands.CreateTodoList
 
         public async Task<bool> BeUniqueTitle(string title, CancellationToken cancellationToken)
         {
-            return await _repository.GetAll()
-                .AllAsync(l => l.Title != title);
+            return (await _repository.GetAllAsync())
+                .All(l => l.Title != title);
         }
     }
 }

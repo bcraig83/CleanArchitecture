@@ -19,7 +19,6 @@ namespace Application.FunctionalTests.Fakes
         // Implement as testing requires...
         public Task<TodoItem> AddAsync(TodoItem entity)
         {
-
             if (entity.Id == 0)
             {
                 entity.Id = id++;
@@ -34,11 +33,6 @@ namespace Application.FunctionalTests.Fakes
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<TodoItem> GetAll()
-        {
-            return _dataStore.Values.AsQueryable();
-        }
-
         public Task<TodoItem> RemoveAsync(TodoItem entity)
         {
             throw new System.NotImplementedException();
@@ -47,6 +41,12 @@ namespace Application.FunctionalTests.Fakes
         public Task<TodoItem> UpdateAsync(TodoItem entity)
         {
             throw new System.NotImplementedException();
+        }
+
+        public Task<IList<TodoItem>> GetAllAsync()
+        {
+            return Task.FromResult((IList<TodoItem>)
+                _dataStore.Values.ToList());
         }
     }
 }

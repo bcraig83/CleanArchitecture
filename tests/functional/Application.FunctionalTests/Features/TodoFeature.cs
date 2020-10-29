@@ -27,9 +27,10 @@ namespace Application.FunctionalTests.Features
                 });
 
             "And given no Todos are currently stored in the database"
-                .x(() =>
+                .x(async () =>
                 {
-                    repository.GetAll().Count().ShouldBe(0);
+                    (await repository.GetAllAsync())
+                        .Count().ShouldBe(0);
                 });
 
             "And given a valid Todo item, with the title 'Buy milk'"
@@ -49,19 +50,17 @@ namespace Application.FunctionalTests.Features
                 });
 
             "Then an item should now be in the database"
-                .x(() =>
+                .x(async () =>
                 {
-                    repository
-                        .GetAll()
+                    (await repository.GetAllAsync())
                         .Count()
                         .ShouldBe(1);
                 });
 
             "And that item should contain the correct title, i.e. `Buy milk`"
-                .x(() =>
+                .x(async () =>
                 {
-                    repository
-                        .GetAll()
+                    (await repository.GetAllAsync())
                         .FirstOrDefault()
                         .Title
                         .ShouldBe("Buy milk");
