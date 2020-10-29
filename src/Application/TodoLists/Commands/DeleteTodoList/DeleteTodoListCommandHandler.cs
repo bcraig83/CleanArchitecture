@@ -24,9 +24,9 @@ namespace Application.TodoLists.Commands.DeleteTodoList
             CancellationToken cancellationToken)
         {
             // Surely some of this defensive code could go inside the repository implementation?
-            var entity = await _repository.GetAll()
+            var entity = (await _repository.GetAllAsync())
                 .Where(l => l.Id == request.Id)
-                .SingleOrDefaultAsync(cancellationToken);
+                .SingleOrDefault();
 
             if (entity == null)
             {

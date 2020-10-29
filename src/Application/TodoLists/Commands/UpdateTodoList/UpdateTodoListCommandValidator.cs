@@ -17,7 +17,7 @@ namespace Application.TodoLists.Commands.UpdateTodoList
 
             RuleFor(v => v.Id)
                 .NotEmpty().WithMessage("Id is required.")
-                .Must(ExistInRepository).WithMessage("No list found with specified id");
+                .MustAsync(ExistInRepository).WithMessage("No list found with specified id");
 
             RuleFor(v => v.Title)
                 .NotEmpty().WithMessage("Title is required.")
@@ -25,17 +25,10 @@ namespace Application.TodoLists.Commands.UpdateTodoList
                 .MustAsync(BeUniqueTitle).WithMessage("The specified title already exists.");
         }
 
-        public bool ExistInRepository(int id)
+        public async Task<bool> ExistInRepository(int id, CancellationToken cancellationToken)
         {
-            var allFromRepo =  _repository.GetAll()
-                .Where(x => x.Id == id);
-
-            if (allFromRepo.Count() == 0)
-            {
-                return false;
-            }
-
-            return true;
+            return (await _repository.GetAllAsync())
+                .Any(x => x.Id == id);
         }
 
         public async Task<bool> BeUniqueTitle(
@@ -43,9 +36,9 @@ namespace Application.TodoLists.Commands.UpdateTodoList
             string title,
             CancellationToken cancellationToken)
         {
-            return await _repository.GetAll()
+            return (await _repository.GetAllAsync())
                 .Where(l => l.Id != model.Id)
-                .AllAsync(l => l.Title != title);
+                .All(l => l.Title != title);
         }
     }
 }

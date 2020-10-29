@@ -4,7 +4,6 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,10 +32,11 @@ namespace Application.TodoLists.Queries.ExportTodos
         {
             var vm = new ExportTodosVm();
 
-            var records = await _repository.GetAll()
+            var records = (await _repository.GetAllAsync())
                     .Where(t => t.ListId == request.ListId)
+                    .AsQueryable()
                     .ProjectTo<TodoItemRecord>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
+                    .ToList();
 
             vm.Content = _fileBuilder.BuildTodoItemsFile(records);
             vm.ContentType = "text/csv";
