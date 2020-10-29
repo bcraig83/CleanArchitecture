@@ -20,6 +20,35 @@ namespace Application.IntegrationTests.Features
         }
 
         [Scenario]
+        public void ShouldThrowException_WhenMinimumFiledsAreNotFilledIn()
+        {
+            Exception exception = null;
+            CreateTodoListCommand command = null;
+
+            "Given an empty command"
+                .x(() =>
+                {
+                    command = new CreateTodoListCommand();
+                });
+
+            "When that command is sent"
+                .x(async () =>
+                {
+                    exception = await Record.ExceptionAsync(async () =>
+                    {
+                        await _fixture.SendAsync(command);
+                    });
+                });
+
+            "Then the appropriate expection is thrown"
+                .x(() =>
+                {
+                    exception.ShouldBeOfType<ValidationException>();
+                    exception.Message.ShouldContain("Title: Title is required.");
+                });
+        }
+
+        [Scenario]
         public void ShouldThrowException_WhenCreatingListWithNonUniqueTitle()
         {
             int createdListId = 0;
@@ -53,6 +82,7 @@ namespace Application.IntegrationTests.Features
                 .x(() =>
                 {
                     exception.ShouldBeOfType<ValidationException>();
+                    exception.Message.ShouldContain("Title: The specified title already exists.");
                 });
 
             "And we should tidyup after ourselves"
