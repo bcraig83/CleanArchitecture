@@ -19,7 +19,7 @@ namespace Application.IntegrationTests
     public class ApplicationTestFixture : IDisposable
     {
         private IConfigurationRoot Configuration { get; set; }
-        private IServiceScopeFactory ScopeFactory { get; set; }
+        public IServiceScopeFactory ScopeFactory { get; private set; }
 
         public string CurrentUserId { get; private set; }
 
@@ -123,6 +123,18 @@ namespace Application.IntegrationTests
             var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
 
             context.Add(entity);
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task RemoveAsync<TEntity>(TEntity entity)
+            where TEntity : class
+        {
+            using var scope = ScopeFactory.CreateScope();
+
+            var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+
+            context.Remove(entity);
 
             await context.SaveChangesAsync();
         }
