@@ -7,11 +7,11 @@ using Xunit;
 namespace Application.IntegrationTests.Features
 {
     [Collection("Application test collection")]
-    public class TodoListFeatures
+    public class CreateTodoListFeature
     {
-        private ApplicationTestFixture _fixture;
+        private readonly ApplicationTestFixture _fixture;
 
-        public TodoListFeatures(ApplicationTestFixture fixture)
+        public CreateTodoListFeature(ApplicationTestFixture fixture)
         {
             _fixture = fixture;
         }
