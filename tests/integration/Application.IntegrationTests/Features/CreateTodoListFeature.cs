@@ -1,7 +1,8 @@
-﻿using Application.TodoLists.Commands.CreateTodoList;
+﻿using Application.Common.Exceptions;
+using Application.TodoLists.Commands.CreateTodoList;
 using Domain.Entities;
-using FluentValidation;
 using Shouldly;
+using System.Linq;
 using Xunit;
 
 namespace Application.IntegrationTests.Features
@@ -17,20 +18,28 @@ namespace Application.IntegrationTests.Features
         }
 
         [Fact]
-        public async void ShouldThrowException_WhenMinimumFiledsAreNotFilledInAsync()
+        public async void ShouldThrowException_WhenMinimumFiledsAreNotFilledIn()
         {
             // Arrange
             var command = new CreateTodoListCommand();
 
             // Act
-            var exception = await Record.ExceptionAsync(async () =>
+            var exception = (ValidationException)await Record.ExceptionAsync(async () =>
             {
                 await _fixture.SendAsync(command);
             });
 
             // Assert
             exception.ShouldBeOfType<ValidationException>();
-            exception.Message.ShouldContain("Title: Title is required.");
+            exception.Message.ShouldContain("One or more validation failures have occurred.");
+
+            var errors = exception.Errors;
+            errors.ShouldNotBeNull();
+
+            errors.TryGetValue("Title", out string[] errorText);
+            errorText.ShouldNotBeNull();
+            errorText.Count().ShouldBe(1);
+            errorText[0].ShouldBe("Title is required.");
         }
 
         [Fact]
@@ -46,7 +55,7 @@ namespace Application.IntegrationTests.Features
             createdEntity.ShouldNotBeNull();
 
             // Act
-            var exception = await Record.ExceptionAsync(async () =>
+            var exception = (ValidationException) await Record.ExceptionAsync(async () =>
             {
                 var result = await _fixture.SendAsync(new CreateTodoListCommand
                 {
@@ -56,7 +65,15 @@ namespace Application.IntegrationTests.Features
 
             // Assert
             exception.ShouldBeOfType<ValidationException>();
-            exception.Message.ShouldContain("Title: The specified title already exists.");
+            exception.Message.ShouldContain("One or more validation failures have occurred.");
+
+            var errors = exception.Errors;
+            errors.ShouldNotBeNull();
+
+            errors.TryGetValue("Title", out string[] errorText);
+            errorText.ShouldNotBeNull();
+            errorText.Count().ShouldBe(1);
+            errorText[0].ShouldBe("The specified title already exists.");
         }
 
         [Fact]
