@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Domain.Common;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
 using MediatR;
@@ -89,6 +90,12 @@ namespace Application.IntegrationTests
 
             var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
 
+            var existingUser = await userManager.FindByNameAsync(userName);
+            if (existingUser != null)
+            {
+                return existingUser.Id;
+            }
+
             var user = new ApplicationUser { UserName = userName, Email = userName };
 
             var result = await userManager.CreateAsync(user, password);
@@ -115,8 +122,8 @@ namespace Application.IntegrationTests
             return await context.FindAsync<TEntity>(keyValues);
         }
 
-        public async Task AddAsync<TEntity>(TEntity entity)
-            where TEntity : class
+        public async Task<int> AddAsync<TEntity>(TEntity entity)
+            where TEntity : BaseEntity
         {
             using var scope = ScopeFactory.CreateScope();
 
@@ -125,6 +132,8 @@ namespace Application.IntegrationTests
             context.Add(entity);
 
             await context.SaveChangesAsync();
+
+            return entity.Id;
         }
 
         public async Task RemoveAsync<TEntity>(TEntity entity)

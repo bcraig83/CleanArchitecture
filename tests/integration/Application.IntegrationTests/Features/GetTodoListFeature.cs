@@ -30,9 +30,10 @@ namespace Application.IntegrationTests.Features
         }
 
         [Fact(Skip = "No idea why this is not working. Suspect it's an async issue")]
+        //[Fact]
         public async void ShouldReturnAllListsAndItems()
         {
-            await _fixture.AddAsync(new TodoList
+            var createdId = await _fixture.AddAsync(new TodoList
             {
                 Title = "Shopping 30/10/2020",
                 Items =
@@ -46,6 +47,9 @@ namespace Application.IntegrationTests.Features
                         new TodoItem { Title = "Tuna" }
                     }
             });
+
+            var confirmCreation = await _fixture.FindAsync<TodoList>(createdId);
+            confirmCreation.ShouldNotBeNull();
 
             var query = new GetTodosQuery();
 
