@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Repositories
@@ -33,10 +33,9 @@ namespace Infrastructure.Persistence.Repositories
             return result;
         }
 
-        public Task<IList<TodoItem>> GetAllAsync()
+        public async Task<IList<TodoItem>> GetAllAsync()
         {
-            return Task.FromResult((IList<TodoItem>)
-                _context.TodoItems.ToList());
+            return await _context.TodoItems.ToListAsync();
         }
 
         public async Task<TodoItem> RemoveAsync(TodoItem entity)
