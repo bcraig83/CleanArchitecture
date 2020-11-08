@@ -1,6 +1,7 @@
 ﻿using Application.TodoLists.Queries.GetTodos.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Domain.Entities;
 using Domain.Enums;
 using Domain.Repositories;
 using MediatR;
@@ -13,12 +14,12 @@ namespace Application.TodoLists.Queries.GetTodos
 {
     public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, TodosVm>
     {
-        private readonly ITodoListRepository _repository;
+        private readonly IRepository<TodoList> _repository;
         private readonly IMapper _mapper;
 
         public GetTodosQueryHandler(
             IMapper mapper,
-            ITodoListRepository repository)
+            IRepository<TodoList> repository)
         {
             _mapper = mapper;
             _repository = repository;

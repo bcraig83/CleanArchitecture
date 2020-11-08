@@ -9,16 +9,17 @@ namespace Application.TodoLists.Commands.UpdateTodoList
 {
     public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListCommand>
     {
-        private readonly ITodoListRepository _repository;
+        private readonly IRepository<TodoList> _repository;
 
-        public UpdateTodoListCommandHandler(ITodoListRepository repository)
+        public UpdateTodoListCommandHandler(
+            IRepository<TodoList> repository)
         {
             _repository = repository;
         }
 
         public async Task<Unit> Handle(UpdateTodoListCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _repository.FindByIdAsync(request.Id);
+            var entity = await _repository.GetAsync(request.Id);
 
             if (entity == null)
             {

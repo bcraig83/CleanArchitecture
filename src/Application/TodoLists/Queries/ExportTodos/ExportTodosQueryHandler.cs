@@ -2,6 +2,7 @@
 using Application.TodoLists.Queries.ExportTodos.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Domain.Entities;
 using Domain.Repositories;
 using MediatR;
 using System.Linq;
@@ -12,14 +13,14 @@ namespace Application.TodoLists.Queries.ExportTodos
 {
     public class ExportTodosQueryHandler : IRequestHandler<ExportTodosQuery, ExportTodosVm>
     {
-        private readonly ITodoItemRepository _repository;
+        private readonly IRepository<TodoItem> _repository;
         private readonly IMapper _mapper;
         private readonly ICsvFileBuilder _fileBuilder;
 
         public ExportTodosQueryHandler(
             IMapper mapper,
             ICsvFileBuilder fileBuilder,
-            ITodoItemRepository repository)
+            IRepository<TodoItem> repository)
         {
             _mapper = mapper;
             _fileBuilder = fileBuilder;

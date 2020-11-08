@@ -9,10 +9,10 @@ namespace Application.TodoItems.Commands.UpdateTodoItem
 {
     public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemCommand>
     {
-        private readonly ITodoItemRepository _repository;
+        private readonly IRepository<TodoItem> _repository;
 
         public UpdateTodoItemCommandHandler(
-            ITodoItemRepository repository)
+            IRepository<TodoItem> repository)
         {
             _repository = repository;
         }
@@ -21,7 +21,7 @@ namespace Application.TodoItems.Commands.UpdateTodoItem
             UpdateTodoItemCommand request,
             CancellationToken cancellationToken)
         {
-            var entity = await _repository.FindByIdAsync(request.Id);
+            var entity = await _repository.GetAsync(request.Id);
 
             if (entity == null)
             {

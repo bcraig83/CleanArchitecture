@@ -10,6 +10,8 @@ namespace Domain.Repositories
         // TODO: should these async methods accept a cancellation token?
         Task<IList<TEntity>> GetAllAsync();
 
+        Task<TEntity> GetAsync(int id);
+
         Task<TEntity> AddAsync(TEntity entity);
 
         Task<TEntity> UpdateAsync(TEntity entity);
