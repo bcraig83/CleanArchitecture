@@ -5,6 +5,7 @@ namespace Domain.Common
 {
     public abstract class BaseEntity
     {
+        // TODO: should this setter be private?
         public int Id { get; set; }
 
         public List<BaseEvent> Events = new List<BaseEvent>();

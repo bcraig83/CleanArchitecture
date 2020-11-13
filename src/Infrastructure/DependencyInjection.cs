@@ -1,7 +1,8 @@
 ﻿using Application.Common.Interfaces;
 using Infrastructure.Email;
 using Infrastructure.Identity;
-using Infrastructure.Persistence;
+using Infrastructure.Persistence.EntityFramework;
+using Infrastructure.Persistence.EntityFramework.Repositories;
 using Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;

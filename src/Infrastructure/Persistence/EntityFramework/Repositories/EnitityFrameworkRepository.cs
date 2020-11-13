@@ -1,10 +1,11 @@
 ﻿using Domain.Common;
 using Domain.Repositories;
+using Infrastructure.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence.Repositories
+namespace Infrastructure.Persistence.EntityFramework.Repositories
 {
     public class EnitityFrameworkRepository<TEntity> : IRepository<TEntity>
         where TEntity : BaseEntity

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence
+namespace Infrastructure.Persistence.EntityFramework
 {
     public static class ApplicationDbContextSeed
     {
