@@ -113,7 +113,7 @@ namespace Application.IntegrationTests.EntityFramework
         }
 
         public async Task<TEntity> FindAsync<TEntity>(params object[] keyValues)
-            where TEntity : class
+            where TEntity : BaseEntity
         {
             using var scope = ScopeFactory.CreateScope();
 
@@ -137,7 +137,7 @@ namespace Application.IntegrationTests.EntityFramework
         }
 
         public async Task RemoveAsync<TEntity>(TEntity entity)
-            where TEntity : class
+            where TEntity : BaseEntity
         {
             using var scope = ScopeFactory.CreateScope();
 
