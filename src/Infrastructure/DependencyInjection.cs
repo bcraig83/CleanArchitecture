@@ -53,7 +53,8 @@ namespace Infrastructure
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             // Add your own repositories, e.g:
-            //services.AddTransient<ITodoItemRepository, TodoItemRepository>();
+            //services.AddTransient<IRepository<TodoItem>, EnitityFrameworkRepository<TodoItem>>();
+
             return services;
         }
     }
