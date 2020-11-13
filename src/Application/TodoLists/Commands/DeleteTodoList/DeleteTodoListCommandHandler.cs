@@ -10,10 +10,10 @@ namespace Application.TodoLists.Commands.DeleteTodoList
 {
     public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListCommand>
     {
-        private readonly ITodoListRepository _repository;
+        private readonly IRepository<TodoList> _repository;
 
         public DeleteTodoListCommandHandler(
-            ITodoListRepository repository)
+            IRepository<TodoList> repository)
         {
             _repository = repository;
         }

@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Domain.Entities;
 using Domain.Repositories;
 using Infrastructure.Email;
 using Infrastructure.Files;
@@ -56,8 +57,8 @@ namespace Infrastructure
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            services.AddTransient<ITodoItemRepository, TodoItemRepository>();
-            services.AddTransient<ITodoListRepository, TodoListRepository>();
+            services.AddTransient<IRepository<TodoItem>, EnitityFrameworkRepository<TodoItem>>();
+            services.AddTransient<IRepository<TodoList>, EnitityFrameworkRepository<TodoList>>();
 
             return services;
         }

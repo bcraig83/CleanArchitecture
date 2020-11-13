@@ -3,7 +3,7 @@ using Domain.Events;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.TodoItems.EventHandler
+namespace Application.TodoItems.Events
 {
     public class TodoItemCompletedEventEmailHandler : IBaseEventHandler<TodoItemCompletedEvent>
     {

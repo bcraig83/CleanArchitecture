@@ -1,4 +1,5 @@
-﻿using Domain.Repositories;
+﻿using Domain.Entities;
+using Domain.Repositories;
 using FluentValidation;
 using System.Linq;
 using System.Threading;
@@ -8,9 +9,9 @@ namespace Application.TodoLists.Commands.UpdateTodoList
 {
     public class UpdateTodoListCommandValidator : AbstractValidator<UpdateTodoListCommand>
     {
-        private readonly ITodoListRepository _repository;
+        private readonly IRepository<TodoList> _repository;
 
-        public UpdateTodoListCommandValidator(ITodoListRepository repository)
+        public UpdateTodoListCommandValidator(IRepository<TodoList> repository)
         {
             _repository = repository;
 

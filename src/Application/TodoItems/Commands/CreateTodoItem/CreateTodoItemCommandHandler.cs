@@ -8,10 +8,10 @@ namespace Application.TodoItems.Commands.CreateTodoItem
 {
     public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, int>
     {
-        private readonly ITodoItemRepository _repository;
+        private readonly IRepository<TodoItem> _repository;
 
         public CreateTodoItemCommandHandler(
-            ITodoItemRepository repository)
+            IRepository<TodoItem> repository)
         {
             _repository = repository;
         }

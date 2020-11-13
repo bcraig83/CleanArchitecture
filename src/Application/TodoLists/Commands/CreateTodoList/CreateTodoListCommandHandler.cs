@@ -8,10 +8,10 @@ namespace Application.TodoLists.Commands.CreateTodoList
 {
     public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, int>
     {
-        private readonly ITodoListRepository _repository;
+        private readonly IRepository<TodoList> _repository;
 
         public CreateTodoListCommandHandler(
-            ITodoListRepository repository)
+            IRepository<TodoList> repository)
         {
             _repository = repository;
         }
