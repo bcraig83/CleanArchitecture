@@ -1,11 +1,12 @@
 ﻿using Application.Common.Exceptions;
+using Application.IntegrationTests.EntityFramework;
 using Application.TodoLists.Commands.CreateTodoList;
 using Domain.Entities;
 using Shouldly;
 using System.Linq;
 using Xunit;
 
-namespace Application.IntegrationTests.Features.TodoLists
+namespace Application.IntegrationTests.EntityFramework.Features.TodoLists
 {
     [Collection("Application test collection")]
     public class CreateTodoListFeature

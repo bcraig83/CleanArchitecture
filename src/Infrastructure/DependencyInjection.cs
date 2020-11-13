@@ -22,6 +22,27 @@ namespace Infrastructure
             this IServiceCollection services,
             IConfiguration configuration)
         {
+            services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
+            services.AddTransient<IDateTime, DateTimeService>();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IIdentityService, IdentityService>();
+
+            services
+                .AddAuthentication()
+                .AddIdentityServerJwt();
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            // TODO: this will be driven by some config item
+            services.AddPersistenceThroughEntityFramework(configuration);
+
+            return services;
+        }
+
+        private static IServiceCollection AddPersistenceThroughEntityFramework(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
@@ -46,20 +67,8 @@ namespace Infrastructure
                 .AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
-            services.AddTransient<IDateTime, DateTimeService>();
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<IIdentityService, IdentityService>();
-
-            services
-                .AddAuthentication()
-                .AddIdentityServerJwt();
-
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-
             services.AddTransient<IRepository<TodoItem>, EnitityFrameworkRepository<TodoItem>>();
             services.AddTransient<IRepository<TodoList>, EnitityFrameworkRepository<TodoList>>();
-
             services.AddTransient<IRepository<Book>, EnitityFrameworkRepository<Book>>();
 
             return services;

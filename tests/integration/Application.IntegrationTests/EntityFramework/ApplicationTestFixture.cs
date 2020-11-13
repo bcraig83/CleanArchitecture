@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using WebApi;
 using Xunit;
 
-namespace Application.IntegrationTests
+namespace Application.IntegrationTests.EntityFramework
 {
     public class ApplicationTestFixture : IDisposable
     {
