@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi;
+using Xunit;
 
 namespace Application.IntegrationTests.NonEntityFramework
 {
@@ -134,5 +135,10 @@ namespace Application.IntegrationTests.NonEntityFramework
         public void Dispose()
         {
         }
+    }
+
+    [CollectionDefinition("Non EF application test collection")]
+    public class ApplicationTestCollection : ICollectionFixture<ApplicationTestFixture>
+    {
     }
 }

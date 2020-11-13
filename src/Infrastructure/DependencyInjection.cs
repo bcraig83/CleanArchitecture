@@ -26,7 +26,6 @@ namespace Infrastructure
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<IIdentityService, IdentityService>();
 
             services
                 .AddAuthentication()
@@ -62,6 +61,7 @@ namespace Infrastructure
             this IServiceCollection services,
             IConfiguration configuration)
         {
+
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
@@ -89,6 +89,8 @@ namespace Infrastructure
             services.AddTransient<IRepository<TodoItem>, EnitityFrameworkRepository<TodoItem>>();
             services.AddTransient<IRepository<TodoList>, EnitityFrameworkRepository<TodoList>>();
             services.AddTransient<IRepository<Book>, EnitityFrameworkRepository<Book>>();
+
+            services.AddTransient<IIdentityService, IdentityService>();
 
             return services;
         }
