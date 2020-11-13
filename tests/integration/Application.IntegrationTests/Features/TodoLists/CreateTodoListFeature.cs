@@ -56,12 +56,12 @@ namespace Application.IntegrationTests.Features.TodoLists
 
             // Act
             var exception = (ValidationException)await Record.ExceptionAsync(async () =>
-           {
-               var result = await _fixture.SendAsync(new CreateTodoListCommand
-               {
-                   Title = "Shopping"
-               });
-           });
+            {
+                var result = await _fixture.SendAsync(new CreateTodoListCommand
+                {
+                    Title = "Shopping"
+                });
+            });
 
             // Assert
             exception.ShouldBeOfType<ValidationException>();
