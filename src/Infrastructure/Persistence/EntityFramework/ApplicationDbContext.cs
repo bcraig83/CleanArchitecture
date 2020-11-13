@@ -37,6 +37,7 @@ namespace Infrastructure.Persistence.EntityFramework
 
         public DbSet<TodoList> TodoLists { get; set; }
         public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<Book> Books { get; set; }
 
         // Don't like how much bespoke, non EF Core code is in here. Makes it difficult to test.
         // Also feels like a violation of single responsibility.
