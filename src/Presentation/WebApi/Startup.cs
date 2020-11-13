@@ -1,7 +1,7 @@
 using Application;
 using Application.Common.Interfaces;
 using Infrastructure;
-using Infrastructure.Persistence;
+using Infrastructure.Persistence.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

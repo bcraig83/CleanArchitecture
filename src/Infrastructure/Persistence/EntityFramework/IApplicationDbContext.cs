@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence
+namespace Infrastructure.Persistence.EntityFramework
 {
     public interface IApplicationDbContext
     {
