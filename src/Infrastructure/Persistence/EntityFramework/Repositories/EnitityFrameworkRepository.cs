@@ -1,6 +1,5 @@
 ﻿using Domain.Common;
 using Domain.Repositories;
-using Infrastructure.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
