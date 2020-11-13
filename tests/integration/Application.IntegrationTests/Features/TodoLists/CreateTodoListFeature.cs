@@ -5,7 +5,7 @@ using Shouldly;
 using System.Linq;
 using Xunit;
 
-namespace Application.IntegrationTests.Features
+namespace Application.IntegrationTests.Features.TodoLists
 {
     [Collection("Application test collection")]
     public class CreateTodoListFeature
@@ -55,7 +55,7 @@ namespace Application.IntegrationTests.Features
             createdEntity.ShouldNotBeNull();
 
             // Act
-            var exception = (ValidationException) await Record.ExceptionAsync(async () =>
+            var exception = (ValidationException)await Record.ExceptionAsync(async () =>
             {
                 var result = await _fixture.SendAsync(new CreateTodoListCommand
                 {

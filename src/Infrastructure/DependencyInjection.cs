@@ -4,8 +4,8 @@ using Domain.Repositories;
 using Infrastructure.Email;
 using Infrastructure.Files;
 using Infrastructure.Identity;
-using Infrastructure.Persistence;
-using Infrastructure.Persistence.Repositories;
+using Infrastructure.Persistence.EntityFramework;
+using Infrastructure.Persistence.EntityFramework.Repositories;
 using Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -59,6 +59,8 @@ namespace Infrastructure
 
             services.AddTransient<IRepository<TodoItem>, EnitityFrameworkRepository<TodoItem>>();
             services.AddTransient<IRepository<TodoList>, EnitityFrameworkRepository<TodoList>>();
+
+            services.AddTransient<IRepository<Book>, EnitityFrameworkRepository<Book>>();
 
             return services;
         }

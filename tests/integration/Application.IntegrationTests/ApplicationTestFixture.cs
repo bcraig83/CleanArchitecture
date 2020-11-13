@@ -1,7 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Common;
 using Infrastructure.Identity;
-using Infrastructure.Persistence;
+using Infrastructure.Persistence.EntityFramework;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
