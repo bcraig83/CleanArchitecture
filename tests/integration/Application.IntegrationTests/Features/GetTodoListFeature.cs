@@ -29,7 +29,7 @@ namespace Application.IntegrationTests.Features
             result.PriorityLevels.ShouldNotBeEmpty();
         }
 
-        [Fact(Skip = "No idea why this is not working. Suspect it's an async issue")]
+        [Fact(Skip = "No idea why this is not working. Suspect it's an async or entity framework issue")]
         //[Fact]
         public async void ShouldReturnAllListsAndItems()
         {
