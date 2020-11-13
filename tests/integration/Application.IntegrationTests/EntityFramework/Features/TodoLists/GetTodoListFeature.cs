@@ -1,5 +1,4 @@
-﻿using Application.IntegrationTests.EntityFramework;
-using Application.TodoLists.Queries.GetTodos;
+﻿using Application.TodoLists.Queries.GetTodos;
 using Domain.Entities;
 using Shouldly;
 using System.Linq;

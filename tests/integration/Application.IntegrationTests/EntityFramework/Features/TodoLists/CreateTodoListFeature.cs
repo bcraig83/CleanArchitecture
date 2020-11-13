@@ -1,5 +1,4 @@
 ﻿using Application.Common.Exceptions;
-using Application.IntegrationTests.EntityFramework;
 using Application.TodoLists.Commands.CreateTodoList;
 using Domain.Entities;
 using Shouldly;

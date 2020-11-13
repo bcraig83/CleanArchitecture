@@ -1,5 +1,4 @@
 ﻿using Application.Books.Queries.GetBooks;
-using Application.IntegrationTests.EntityFramework;
 using Domain.Entities;
 using Shouldly;
 using System.Linq;
