@@ -5,7 +5,7 @@ using Domain.Entities;
 using Shouldly;
 using Xunit;
 
-namespace Application.IntegrationTests.Features
+namespace Application.IntegrationTests.Features.TodoLists
 {
     [Collection("Application test collection")]
     public class DeleteTodoListFeature
