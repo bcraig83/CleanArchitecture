@@ -61,7 +61,6 @@ namespace Infrastructure
             this IServiceCollection services,
             IConfiguration configuration)
         {
-
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
                 services.AddDbContext<ApplicationDbContext>(options =>

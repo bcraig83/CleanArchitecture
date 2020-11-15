@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Common;
 using Domain.Repositories;
+using Infrastructure.Email;
 using Infrastructure.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +25,8 @@ namespace Application.IntegrationTests.NonEntityFramework
         public IServiceScopeFactory ScopeFactory { get; private set; }
 
         public string CurrentUserId { get; private set; }
+
+        private EmailSenderStub _emailSenderStub;
 
         public ApplicationTestFixture()
         {
@@ -55,6 +59,15 @@ namespace Application.IntegrationTests.NonEntityFramework
             // Register testing version
             services.AddTransient(provider =>
                 Mock.Of<ICurrentUserService>(s => s.UserId == CurrentUserId));
+
+            // Replace service registration for email sender
+            var currentEmailSenderServiceDescriptor = services.FirstOrDefault(d =>
+                d.ServiceType == typeof(IEmailSender));
+            services.Remove(currentEmailSenderServiceDescriptor);
+
+            // Register testing version
+            _emailSenderStub = new EmailSenderStub();
+            services.AddTransient<IEmailSender>(provider => _emailSenderStub);
 
             ScopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
         }
@@ -134,6 +147,16 @@ namespace Application.IntegrationTests.NonEntityFramework
 
         public void Dispose()
         {
+        }
+
+        public void ClearRecordedEmails()
+        {
+            _emailSenderStub.Clear();
+        }
+
+        public IList<EmailDetails> GetRecordedEmails()
+        {
+            return _emailSenderStub._recordedEmails;
         }
     }
 
