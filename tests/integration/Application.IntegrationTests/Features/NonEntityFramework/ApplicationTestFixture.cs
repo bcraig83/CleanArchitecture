@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.IntegrationTests.Fakes;
 using Domain.Common;
 using Domain.Repositories;
 using Infrastructure.Identity;
@@ -25,7 +26,7 @@ namespace Application.IntegrationTests.Features.NonEntityFramework
 
         public string CurrentUserId { get; private set; }
 
-        private readonly Fakes.EmailSenderStub _emailSenderStub;
+        private readonly EmailSenderStub _emailSenderStub;
 
         public ApplicationTestFixture()
         {
@@ -65,7 +66,7 @@ namespace Application.IntegrationTests.Features.NonEntityFramework
             services.Remove(currentEmailSenderServiceDescriptor);
 
             // Register testing version
-            _emailSenderStub = new Fakes.EmailSenderStub();
+            _emailSenderStub = new EmailSenderStub();
             services.AddTransient<IEmailSender>(provider => _emailSenderStub);
 
             ScopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();

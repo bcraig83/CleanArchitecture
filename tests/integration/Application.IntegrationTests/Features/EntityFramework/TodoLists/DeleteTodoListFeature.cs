@@ -1,5 +1,4 @@
 ﻿using Application.Common.Exceptions;
-using Application.IntegrationTests.Features.EntityFramework;
 using Application.TodoLists.Commands.CreateTodoList;
 using Application.TodoLists.Commands.DeleteTodoList;
 using Domain.Entities;
