@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.IntegrationTests.Fakes;
 using Domain.Common;
 using Domain.Repositories;
 using Infrastructure.Identity;
@@ -9,13 +10,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi;
 using Xunit;
 
-namespace Application.IntegrationTests.NonEntityFramework
+namespace Application.IntegrationTests.Features.NonEntityFramework
 {
     public class ApplicationTestFixture : IDisposable
     {
@@ -23,6 +25,8 @@ namespace Application.IntegrationTests.NonEntityFramework
         public IServiceScopeFactory ScopeFactory { get; private set; }
 
         public string CurrentUserId { get; private set; }
+
+        private readonly EmailSenderStub _emailSenderStub;
 
         public ApplicationTestFixture()
         {
@@ -55,6 +59,15 @@ namespace Application.IntegrationTests.NonEntityFramework
             // Register testing version
             services.AddTransient(provider =>
                 Mock.Of<ICurrentUserService>(s => s.UserId == CurrentUserId));
+
+            // Replace service registration for email sender
+            var currentEmailSenderServiceDescriptor = services.FirstOrDefault(d =>
+                d.ServiceType == typeof(IEmailSender));
+            services.Remove(currentEmailSenderServiceDescriptor);
+
+            // Register testing version
+            _emailSenderStub = new EmailSenderStub();
+            services.AddTransient<IEmailSender>(provider => _emailSenderStub);
 
             ScopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
         }
@@ -134,6 +147,16 @@ namespace Application.IntegrationTests.NonEntityFramework
 
         public void Dispose()
         {
+        }
+
+        public void ClearRecordedEmails()
+        {
+            _emailSenderStub.Clear();
+        }
+
+        public IList<Fakes.EmailDetails> GetRecordedEmails()
+        {
+            return _emailSenderStub._recordedEmails;
         }
     }
 

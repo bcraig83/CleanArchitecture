@@ -54,6 +54,8 @@ namespace Infrastructure
             services.AddSingleton<IRepository<TodoList>, InMemoryRepository<TodoList>>();
             services.AddSingleton<IRepository<Book>, InMemoryRepository<Book>>();
 
+            services.AddScoped<EventProcessor>();
+
             return services;
         }
 
@@ -61,7 +63,6 @@ namespace Infrastructure
             this IServiceCollection services,
             IConfiguration configuration)
         {
-
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
