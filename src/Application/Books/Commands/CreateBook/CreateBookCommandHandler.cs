@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Events;
 using Domain.Repositories;
 using MediatR;
 using System.Threading;
@@ -27,6 +28,14 @@ namespace Application.Books.Commands.CreateBook
                 Publisher = request.Publisher,
                 ISBN10 = request.ISBN10
             };
+
+            var @event = new BookCreatedEvent
+            {
+                Title = entity.Title,
+                Author = entity.Author
+            };
+
+            entity.Events.Add(@event);
 
             var result = await _repository.AddAsync(entity);
 

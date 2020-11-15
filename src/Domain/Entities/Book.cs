@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using Domain.Enums;
 
 namespace Domain.Entities
 {
@@ -8,6 +7,7 @@ namespace Domain.Entities
         public string Title { get; set; }
         public string Author { get; set; }
         public string Language { get; set; }
+
         //public Format Format { get; set; }
         public string Publisher { get; set; }
 

@@ -93,7 +93,7 @@ namespace Application.IntegrationTests.NonEntityFramework.Features.Books
             };
 
             // Act
-            var result = await _fixture.SendAsync(command);
+            await _fixture.SendAsync(command);
 
             // Assert
             var sentEmails = _fixture.GetRecordedEmails();
