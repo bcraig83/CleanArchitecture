@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using WebApi;
 using Xunit;
 
-namespace Application.IntegrationTests
+namespace Application.IntegrationTests.EntityFramework
 {
     public class ApplicationTestFixture : IDisposable
     {
@@ -113,7 +113,7 @@ namespace Application.IntegrationTests
         }
 
         public async Task<TEntity> FindAsync<TEntity>(params object[] keyValues)
-            where TEntity : class
+            where TEntity : BaseEntity
         {
             using var scope = ScopeFactory.CreateScope();
 
@@ -137,7 +137,7 @@ namespace Application.IntegrationTests
         }
 
         public async Task RemoveAsync<TEntity>(TEntity entity)
-            where TEntity : class
+            where TEntity : BaseEntity
         {
             using var scope = ScopeFactory.CreateScope();
 

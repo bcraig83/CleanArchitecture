@@ -2,7 +2,6 @@
 using Infrastructure.Email;
 using Infrastructure.Identity;
 using Infrastructure.Persistence.EntityFramework;
-using Infrastructure.Persistence.EntityFramework.Repositories;
 using Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -16,6 +15,43 @@ namespace Infrastructure
     public static class DependencyInjection
     {
         public static IServiceCollection AddInfrastructure(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.AddTransient<IDateTime, DateTimeService>();
+            services.AddTransient<IEmailSender, EmailSender>();
+
+            services
+                .AddAuthentication()
+                .AddIdentityServerJwt();
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            // TODO: this will be driven by some config item
+            if (configuration.GetValue<bool>("UseInMemoryPersistence"))
+            {
+                services.AddPersistenceThroughInMemoryDatastore();
+            }
+            else
+            {
+                services.AddPersistenceThroughEntityFramework(configuration);
+            }
+
+            return services;
+        }
+
+        // TODO: obviously this is just for testing
+        private static IServiceCollection AddPersistenceThroughInMemoryDatastore(
+            this IServiceCollection services)
+        {
+            //services.AddSingleton<IRepository<TodoItem>, InMemoryRepository<TodoItem>>();
+            //services.AddSingleton<IRepository<TodoList>, InMemoryRepository<TodoList>>();
+            //services.AddSingleton<IRepository<Book>, InMemoryRepository<Book>>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddPersistenceThroughEntityFramework(
             this IServiceCollection services,
             IConfiguration configuration)
         {
@@ -43,18 +79,10 @@ namespace Infrastructure
                 .AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            services.AddTransient<IDateTime, DateTimeService>();
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<IIdentityService, IdentityService>();
-
-            services
-                .AddAuthentication()
-                .AddIdentityServerJwt();
-
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-
             // Add your own repositories, e.g:
             //services.AddTransient<IRepository<TodoItem>, EnitityFrameworkRepository<TodoItem>>();
+
+            services.AddTransient<IIdentityService, IdentityService>();
 
             return services;
         }
