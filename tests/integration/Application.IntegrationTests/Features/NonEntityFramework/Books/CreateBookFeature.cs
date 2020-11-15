@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Application.IntegrationTests.NonEntityFramework.Features.Books
+namespace Application.IntegrationTests.Features.NonEntityFramework.Books
 {
     [Collection("Non EF application test collection")]
     public class CreateBookFeature

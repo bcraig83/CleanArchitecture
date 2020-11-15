@@ -10,43 +10,55 @@ namespace Infrastructure.Persistence.InMemory
         where TEntity : BaseEntity
     {
         private readonly IDictionary<int, TEntity> _dataStore;
+        private readonly EventProcessor _eventProcessor;
 
-        public InMemoryRepository()
+        public InMemoryRepository(
+            EventProcessor eventProcessor)
         {
             _dataStore = new Dictionary<int, TEntity>();
+            _eventProcessor = eventProcessor;
         }
 
-        // TODO: this is obviousyl very rough and ready, and needs proper defensive code!
-        public Task<TEntity> AddAsync(TEntity entity)
+        // TODO: this is obviously very rough and ready, and needs proper defensive code!
+        public async Task<TEntity> AddAsync(TEntity entity)
         {
             _dataStore.TryAdd(entity.Id, entity);
-            return Task.FromResult(entity);
+
+            await _eventProcessor.ProcessEvents(entity);
+
+            return entity;
         }
 
         public Task<IList<TEntity>> GetAllAsync()
         {
             var resultAsCollection = _dataStore.Values;
             IList<TEntity> resultAsList = resultAsCollection.ToList();
+
             return Task.FromResult(resultAsList);
         }
 
         public Task<TEntity> GetAsync(int id)
         {
             _dataStore.TryGetValue(id, out var result);
+
             return Task.FromResult(result);
         }
 
-        public Task<TEntity> RemoveAsync(TEntity entity)
+        public async Task<TEntity> RemoveAsync(TEntity entity)
         {
             _dataStore.Remove(entity.Id);
-            return Task.FromResult(entity);
+            await _eventProcessor.ProcessEvents(entity);
+            return entity;
         }
 
-        public Task<TEntity> UpdateAsync(TEntity entity)
+        public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             _dataStore.Remove(entity.Id);
             _dataStore.TryAdd(entity.Id, entity);
-            return Task.FromResult(entity);
+
+            await _eventProcessor.ProcessEvents(entity);
+
+            return entity;
         }
     }
 }

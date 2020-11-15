@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Application.IntegrationTests.EntityFramework.Features.TodoLists
+namespace Application.IntegrationTests.Features.EntityFramework.TodoLists
 {
     [Collection("Application test collection")]
     public class CreateTodoListFeature
