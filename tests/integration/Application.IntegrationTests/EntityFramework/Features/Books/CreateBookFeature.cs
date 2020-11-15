@@ -4,7 +4,7 @@ using Shouldly;
 using System.Linq;
 using Xunit;
 
-namespace Application.IntegrationTests.Features.Books
+namespace Application.IntegrationTests.EntityFramework.Features.Books
 {
     [Collection("Application test collection")]
     public class CreateBookFeature

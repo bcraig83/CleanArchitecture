@@ -4,7 +4,7 @@ using Shouldly;
 using System.Linq;
 using Xunit;
 
-namespace Application.IntegrationTests.Features.TodoLists
+namespace Application.IntegrationTests.EntityFramework.Features.TodoLists
 {
     [Collection("Application test collection")]
     public class GetTodoListFeature
