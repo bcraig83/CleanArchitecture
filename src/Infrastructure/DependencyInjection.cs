@@ -48,7 +48,7 @@ namespace Infrastructure
             //services.AddSingleton<IRepository<TodoList>, InMemoryRepository<TodoList>>();
             //services.AddSingleton<IRepository<Book>, InMemoryRepository<Book>>();
 
-            services.AddScoped<EventProcessor>();
+            //services.AddScoped<EventProcessor>();
 
             return services;
         }
