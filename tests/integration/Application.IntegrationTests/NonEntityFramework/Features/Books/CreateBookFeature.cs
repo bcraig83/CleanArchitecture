@@ -85,6 +85,8 @@ namespace Application.IntegrationTests.NonEntityFramework.Features.Books
         public async void ShouldSendEmail_OnSuccessfulBookCreation()
         {
             // Arrange
+            _fixture.ClearRecordedEmails();
+
             var command = new CreateBookCommand
             {
                 Title = "The Lord of the Rings",
@@ -99,6 +101,15 @@ namespace Application.IntegrationTests.NonEntityFramework.Features.Books
             var sentEmails = _fixture.GetRecordedEmails();
             sentEmails.ShouldNotBeNull();
             sentEmails.ShouldNotBeEmpty();
+            sentEmails.Count.ShouldBe(1);
+
+            var sentMail = sentEmails.First();
+            sentMail.To.ShouldBe("recipient@somedomain.com");
+            sentMail.From.ShouldBe("sender@somedomain.com");
+            sentMail.Subject.ShouldBe("A new book has been added!");
+            sentMail.Body.ShouldBe("Check out The Lord of the Rings by JRR Tolkien !");
+
+            _fixture.ClearRecordedEmails();
         }
     }
 }

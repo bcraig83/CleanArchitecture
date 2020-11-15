@@ -23,8 +23,6 @@ namespace Application.Books.Events
                  "sender@somedomain.com",
                  "A new book has been added!",
                  $"Check out {notification.Title} by {notification.Author} !");
-
-            throw new System.NotImplementedException();
         }
     }
 }
