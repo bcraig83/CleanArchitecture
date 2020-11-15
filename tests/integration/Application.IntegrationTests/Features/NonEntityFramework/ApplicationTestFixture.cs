@@ -1,7 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Common;
 using Domain.Repositories;
-using Infrastructure.Email;
 using Infrastructure.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -17,7 +16,7 @@ using System.Threading.Tasks;
 using WebApi;
 using Xunit;
 
-namespace Application.IntegrationTests.NonEntityFramework
+namespace Application.IntegrationTests.Features.NonEntityFramework
 {
     public class ApplicationTestFixture : IDisposable
     {
@@ -26,7 +25,7 @@ namespace Application.IntegrationTests.NonEntityFramework
 
         public string CurrentUserId { get; private set; }
 
-        private EmailSenderStub _emailSenderStub;
+        private readonly Fakes.EmailSenderStub _emailSenderStub;
 
         public ApplicationTestFixture()
         {
@@ -66,7 +65,7 @@ namespace Application.IntegrationTests.NonEntityFramework
             services.Remove(currentEmailSenderServiceDescriptor);
 
             // Register testing version
-            _emailSenderStub = new EmailSenderStub();
+            _emailSenderStub = new Fakes.EmailSenderStub();
             services.AddTransient<IEmailSender>(provider => _emailSenderStub);
 
             ScopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
@@ -154,7 +153,7 @@ namespace Application.IntegrationTests.NonEntityFramework
             _emailSenderStub.Clear();
         }
 
-        public IList<EmailDetails> GetRecordedEmails()
+        public IList<Fakes.EmailDetails> GetRecordedEmails()
         {
             return _emailSenderStub._recordedEmails;
         }

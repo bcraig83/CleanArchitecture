@@ -4,9 +4,9 @@ using Shouldly;
 using System.Linq;
 using Xunit;
 
-namespace Application.IntegrationTests.EntityFramework.Features.Books
+namespace Application.IntegrationTests.Features.NonEntityFramework.Books
 {
-    [Collection("Application test collection")]
+    [Collection("Non EF application test collection")]
     public class CreateBookFeature
     {
         private readonly ApplicationTestFixture _fixture;
@@ -79,6 +79,37 @@ namespace Application.IntegrationTests.EntityFramework.Features.Books
             errorText.ShouldNotBeNull();
             errorText.Count().ShouldBe(1);
             errorText[0].ShouldBe("ISBN10 code must be made up of 10 digits");
+        }
+
+        [Fact]
+        public async void ShouldSendEmail_OnSuccessfulBookCreation()
+        {
+            // Arrange
+            _fixture.ClearRecordedEmails();
+
+            var command = new CreateBookCommand
+            {
+                Title = "The Lord of the Rings",
+                ISBN10 = "1212121212",
+                Author = "JRR Tolkien"
+            };
+
+            // Act
+            await _fixture.SendAsync(command);
+
+            // Assert
+            var sentEmails = _fixture.GetRecordedEmails();
+            sentEmails.ShouldNotBeNull();
+            sentEmails.ShouldNotBeEmpty();
+            sentEmails.Count.ShouldBe(1);
+
+            var sentMail = sentEmails.First();
+            sentMail.To.ShouldBe("recipient@somedomain.com");
+            sentMail.From.ShouldBe("sender@somedomain.com");
+            sentMail.Subject.ShouldBe("A new book has been added!");
+            sentMail.Body.ShouldBe("Check out The Lord of the Rings by JRR Tolkien !");
+
+            _fixture.ClearRecordedEmails();
         }
     }
 }

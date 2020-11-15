@@ -1,4 +1,5 @@
 ﻿using Application.Common.Exceptions;
+using Application.IntegrationTests.Features.EntityFramework;
 using Application.TodoLists.Commands.CreateTodoList;
 using Application.TodoLists.Commands.UpdateTodoList;
 using Domain.Entities;
@@ -6,7 +7,7 @@ using Shouldly;
 using System.Linq;
 using Xunit;
 
-namespace Application.IntegrationTests.EntityFramework.Features.TodoLists
+namespace Application.IntegrationTests.Features.EntityFramework.TodoLists
 {
     [Collection("Application test collection")]
     public class UpdateTodoListFeature

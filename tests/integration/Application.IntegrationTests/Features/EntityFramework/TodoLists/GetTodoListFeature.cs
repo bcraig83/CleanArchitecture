@@ -1,10 +1,11 @@
-﻿using Application.TodoLists.Queries.GetTodos;
+﻿using Application.IntegrationTests.Features.EntityFramework;
+using Application.TodoLists.Queries.GetTodos;
 using Domain.Entities;
 using Shouldly;
 using System.Linq;
 using Xunit;
 
-namespace Application.IntegrationTests.EntityFramework.Features.TodoLists
+namespace Application.IntegrationTests.Features.EntityFramework.TodoLists
 {
     [Collection("Application test collection")]
     public class GetTodoListFeature
