@@ -80,5 +80,25 @@ namespace Application.IntegrationTests.NonEntityFramework.Features.Books
             errorText.Count().ShouldBe(1);
             errorText[0].ShouldBe("ISBN10 code must be made up of 10 digits");
         }
+
+        [Fact]
+        public async void ShouldSendEmail_OnSuccessfulBookCreation()
+        {
+            // Arrange
+            var command = new CreateBookCommand
+            {
+                Title = "The Lord of the Rings",
+                ISBN10 = "1212121212",
+                Author = "JRR Tolkien"
+            };
+
+            // Act
+            var result = await _fixture.SendAsync(command);
+
+            // Assert
+            var sentEmails = _fixture.GetRecordedEmails();
+            sentEmails.ShouldNotBeNull();
+            sentEmails.ShouldNotBeEmpty();
+        }
     }
 }
