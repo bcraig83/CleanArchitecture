@@ -89,8 +89,6 @@ namespace Infrastructure
             services.AddTransient<IRepository<TodoList>, EnitityFrameworkRepository<TodoList>>();
             services.AddTransient<IRepository<Book>, EnitityFrameworkRepository<Book>>();
 
-            services.AddTransient<IIdentityService, IdentityService>();
-
             return services;
         }
     }
