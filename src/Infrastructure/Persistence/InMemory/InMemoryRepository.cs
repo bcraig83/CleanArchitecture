@@ -12,6 +12,8 @@ namespace Infrastructure.Persistence.InMemory
         private readonly IDictionary<int, TEntity> _dataStore;
         private readonly EventProcessor _eventProcessor;
 
+        private static int index = 1;
+
         public InMemoryRepository(
             EventProcessor eventProcessor)
         {
@@ -22,6 +24,11 @@ namespace Infrastructure.Persistence.InMemory
         // TODO: this is obviously very rough and ready, and needs proper defensive code!
         public async Task<TEntity> AddAsync(TEntity entity)
         {
+            if (entity.Id == 0)
+            {
+                entity.Id = index++;
+            }
+
             _dataStore.TryAdd(entity.Id, entity);
 
             await _eventProcessor.ProcessEvents(entity);
