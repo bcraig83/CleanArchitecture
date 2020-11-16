@@ -1,10 +1,11 @@
 ﻿using Application.Books.Commands.CreateBook;
 using Application.Common.Exceptions;
+using Application.IntegrationTests.Features.InMemory;
 using Shouldly;
 using System.Linq;
 using Xunit;
 
-namespace Application.IntegrationTests.Features.NonEntityFramework.Books
+namespace Application.IntegrationTests.Features.InMemory.Books
 {
     [Collection("Non EF application test collection")]
     public class CreateBookFeature
