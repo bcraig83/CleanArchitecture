@@ -46,13 +46,11 @@ namespace Infrastructure
             return services;
         }
 
-        // TODO: obviously this is just for testing
+        // Obviously this is just for testing
         private static IServiceCollection AddPersistenceThroughInMemoryDatastore(
             this IServiceCollection services)
         {
-            services.AddSingleton<IRepository<TodoItem>, InMemoryRepository<TodoItem>>();
-            services.AddSingleton<IRepository<TodoList>, InMemoryRepository<TodoList>>();
-            services.AddSingleton<IRepository<Book>, InMemoryRepository<Book>>();
+            services.AddSingleton(typeof(IRepository<>), typeof(InMemoryRepository<>));
 
             services.AddScoped<EventProcessor>();
 
