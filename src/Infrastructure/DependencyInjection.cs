@@ -1,7 +1,9 @@
 ﻿using Application.Common.Interfaces;
+using Domain.Repositories;
 using Infrastructure.Email;
 using Infrastructure.Identity;
 using Infrastructure.Persistence.EntityFramework;
+using Infrastructure.Persistence.InMemory;
 using Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -40,13 +42,11 @@ namespace Infrastructure
             return services;
         }
 
-        // TODO: obviously this is just for testing
+        // Obviously this is just for testing
         private static IServiceCollection AddPersistenceThroughInMemoryDatastore(
             this IServiceCollection services)
         {
-            //services.AddSingleton<IRepository<TodoItem>, InMemoryRepository<TodoItem>>();
-            //services.AddSingleton<IRepository<TodoList>, InMemoryRepository<TodoList>>();
-            //services.AddSingleton<IRepository<Book>, InMemoryRepository<Book>>();
+            services.AddSingleton(typeof(IRepository<>), typeof(InMemoryRepository<>));
 
             //services.AddScoped<EventProcessor>();
 
@@ -83,8 +83,6 @@ namespace Infrastructure
 
             // Add your own repositories, e.g:
             //services.AddTransient<IRepository<TodoItem>, EnitityFrameworkRepository<TodoItem>>();
-
-            services.AddTransient<IIdentityService, IdentityService>();
 
             return services;
         }

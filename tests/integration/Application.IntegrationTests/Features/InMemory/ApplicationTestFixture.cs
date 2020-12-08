@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using WebApi;
 using Xunit;
 
-namespace Application.IntegrationTests.Features.NonEntityFramework
+namespace Application.IntegrationTests.Features.InMemory
 {
     public class ApplicationTestFixture : IDisposable
     {
@@ -30,6 +30,7 @@ namespace Application.IntegrationTests.Features.NonEntityFramework
 
         public ApplicationTestFixture()
         {
+            // TODO: that app settings file should be called "appsettings.IntegrationTest.json"
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.Test.json", true, true)
@@ -154,7 +155,7 @@ namespace Application.IntegrationTests.Features.NonEntityFramework
             _emailSenderStub.Clear();
         }
 
-        public IList<Fakes.EmailDetails> GetRecordedEmails()
+        public IList<EmailDetails> GetRecordedEmails()
         {
             return _emailSenderStub._recordedEmails;
         }
