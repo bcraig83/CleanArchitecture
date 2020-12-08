@@ -46,6 +46,7 @@ The latest "StartHere" branch can be found under "StartHere/latest", but you sho
 
 ### Infrastructure
 
+- Further separated this level into DataAccess and Integration. It just feels like data access and persistance is such a big portion of most applications, it needs to have it's own separate layer.
 - Upgraded dependencies to the latest and greatest.
 - I have to admit a lack of understanding of EF Core. I think I may have made a mess of the persistance layer. Specifically,  the "InitialCreate" class. Let's call it a work-in-progress for now! 
 
