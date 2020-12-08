@@ -1,6 +1,5 @@
 ﻿using Application.Books.Commands.CreateBook;
 using Application.Common.Exceptions;
-using Application.IntegrationTests.Features.InMemory;
 using Shouldly;
 using System.Linq;
 using Xunit;
