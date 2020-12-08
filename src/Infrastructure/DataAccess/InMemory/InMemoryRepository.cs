@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence.InMemory
+namespace DataAccess.InMemory
 {
     public class InMemoryRepository<TEntity> : IRepository<TEntity>
         where TEntity : BaseEntity

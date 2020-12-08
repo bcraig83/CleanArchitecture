@@ -1,39 +1,25 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
+﻿using DataAccess.EntityFramework;
+using DataAccess.EntityFramework.Repositories;
+using DataAccess.InMemory;
 using Domain.Repositories;
-using Infrastructure.Email;
-using Infrastructure.Files;
 using Infrastructure.Identity;
-using Infrastructure.Persistence.EntityFramework;
-using Infrastructure.Persistence.EntityFramework.Repositories;
-using Infrastructure.Persistence.InMemory;
-using Infrastructure.Services;
-using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
-namespace Infrastructure
+namespace DataAccess
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(
+        public static IServiceCollection AddDataAccess(
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
-            services.AddTransient<IDateTime, DateTimeService>();
-            services.AddTransient<IEmailSender, EmailSender>();
-
             services
                 .AddAuthentication()
                 .AddIdentityServerJwt();
 
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-
-            // TODO: this will be driven by some config item
             if (configuration.GetValue<bool>("UseInMemoryPersistence"))
             {
                 services.AddPersistenceThroughInMemoryDatastore();
@@ -58,8 +44,8 @@ namespace Infrastructure
         }
 
         private static IServiceCollection AddPersistenceThroughEntityFramework(
-            this IServiceCollection services,
-            IConfiguration configuration)
+           this IServiceCollection services,
+           IConfiguration configuration)
         {
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {

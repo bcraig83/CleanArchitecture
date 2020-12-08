@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.EntityFramework.Configurations
+namespace DataAccess.EntityFramework.Configurations
 {
     public class TodoListConfiguration : IEntityTypeConfiguration<TodoList>
     {

@@ -1,7 +1,8 @@
 using Application;
 using Application.Common.Interfaces;
+using DataAccess;
+using DataAccess.EntityFramework;
 using Infrastructure;
-using Infrastructure.Persistence.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,8 @@ namespace WebApi
             });
 
             services.AddApplication();
-            services.AddInfrastructure(Configuration);
+            services.AddInfrastructure();
+            services.AddDataAccess(Configuration);
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
