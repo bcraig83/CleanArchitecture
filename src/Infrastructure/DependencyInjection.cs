@@ -81,8 +81,7 @@ namespace Infrastructure
                 .AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            // Add your own repositories, e.g:
-            //services.AddTransient<IRepository<TodoItem>, EnitityFrameworkRepository<TodoItem>>();
+            services.AddTransient(typeof(IRepository<>), typeof(EnitityFrameworkRepository<>));
 
             return services;
         }
