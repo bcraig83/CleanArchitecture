@@ -2,7 +2,7 @@
 using MediatR;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence.InMemory
+namespace DataAccess.InMemory
 {
     public class EventProcessor
     {
