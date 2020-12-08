@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence.EntityFramework.Repositories
+namespace DataAccess.EntityFramework.Repositories
 {
     public class EnitityFrameworkRepository<TEntity> : IRepository<TEntity>
         where TEntity : BaseEntity
