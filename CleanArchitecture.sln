@@ -34,7 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration", "src\Infrastructure\Integration\Integration.csproj", "{C06F3E88-8FFC-4B67-B62F-33DAAACA6949}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "src\Infrastructure\DataAccess\DataAccess.csproj", "{7DE34F45-BCC4-4225-A49C-E5338E9082A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "src\Infrastructure\DataAccess\DataAccess.csproj", "{7DE34F45-BCC4-4225-A49C-E5338E9082A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

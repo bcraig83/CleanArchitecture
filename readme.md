@@ -54,6 +54,7 @@ The latest "StartHere" branch can be found under "StartHere/latest", but you sho
 
 - I've made this layer a directory. The rationale is, that we may went to present the same app in a variety of formats. Maybe we will have an application that we can hit via a REST API, that project can go in here, but call down into the Application layer. But then we might need the same functionality via gRPC. Perhaps we need a command line version of the App, or a Blazor application, or a desktop application. All these 'runtime' apps should live here, and have no business logic, only 'protocol' logic, if required.
 - I've started implementing a REST API to prove it out. Will add more over time.
+- Added `Audit.Net` to the REST API for tracking all requests. Currently just writes to file, but could be adjusted to point to a database or whatever we want. (see [here](https://github.com/thepirat000/Audit.NET#data-providers))
 
 ### Tests
 
