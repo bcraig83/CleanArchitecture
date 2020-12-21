@@ -16,7 +16,6 @@ namespace WebApi.Controllers
 
         protected IMediator Mediator => _mediator ??= (IMediator)HttpContext.RequestServices.GetService(typeof(IMediator));
 
-
         private IWebHostEnvironment _hostingEnvironment;
 
         private IWebHostEnvironment HostingEnvironment => _hostingEnvironment ??= (IWebHostEnvironment)HttpContext.RequestServices.GetService(typeof(IWebHostEnvironment));

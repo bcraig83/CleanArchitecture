@@ -72,7 +72,6 @@ namespace WebApi
 
             app.UseAuditMiddleware();
 
-            //app.UseMvc();
             app.UseAuditCorrelationId(contextAccessor);
 
             app.UseHealthChecks("/health");
