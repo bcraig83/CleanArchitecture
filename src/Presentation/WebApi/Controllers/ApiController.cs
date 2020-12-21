@@ -11,5 +11,19 @@ namespace WebApi.Controllers
         private IMediator _mediator;
 
         protected IMediator Mediator => _mediator ??= (IMediator)HttpContext.RequestServices.GetService(typeof(IMediator));
+
+        [HttpGet("env")]
+        public IActionResult GetEnvironmentDetails()
+        {
+            var assembly = Assembly.GetExecutingAssembly().FullName;
+            var result = new
+            {
+                Assembly = assembly,
+                Environment = _hostingEnvironment.EnvironmentName,
+                MachineName = Environment.MachineName,
+                OS = $"{RuntimeInformation.OSDescription} ({RuntimeInformation.OSArchitecture})"
+            };
+            return Ok(result);
+        }
     }
 }
