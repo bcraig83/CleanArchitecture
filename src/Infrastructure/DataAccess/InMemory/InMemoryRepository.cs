@@ -1,4 +1,5 @@
-﻿using Domain.Common;
+﻿using Application.Common.Interfaces;
+using Domain.Common;
 using Domain.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,17 @@ namespace DataAccess.InMemory
     {
         private readonly IDictionary<int, TEntity> _dataStore;
         private readonly EventProcessor _eventProcessor;
+        private readonly IDateTime _dateTimeService;
 
         private static int index = 1;
 
         public InMemoryRepository(
-            EventProcessor eventProcessor)
+            EventProcessor eventProcessor, 
+            IDateTime dateTimeService)
         {
             _dataStore = new Dictionary<int, TEntity>();
             _eventProcessor = eventProcessor;
+            _dateTimeService = dateTimeService;
         }
 
         // TODO: this is obviously very rough and ready, and needs proper defensive code!
@@ -28,6 +32,8 @@ namespace DataAccess.InMemory
             {
                 entity.Id = index++;
             }
+
+            entity.Created = _dateTimeService.Now;
 
             _dataStore.TryAdd(entity.Id, entity);
 
@@ -61,6 +67,9 @@ namespace DataAccess.InMemory
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             _dataStore.Remove(entity.Id);
+
+            entity.LastModified = _dateTimeService.Now;
+
             _dataStore.TryAdd(entity.Id, entity);
 
             await _eventProcessor.ProcessEvents(entity);
