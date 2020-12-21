@@ -33,7 +33,9 @@ namespace DataAccess.InMemory
                 entity.Id = index++;
             }
 
-            entity.Created = _dateTimeService.Now;
+            var now = _dateTimeService.Now;
+            entity.Created = now;
+            entity.LastModified = now;
 
             _dataStore.TryAdd(entity.Id, entity);
 
