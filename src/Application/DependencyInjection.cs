@@ -1,4 +1,5 @@
 ﻿using Application.Books.Commands.CreateBook;
+using Application.Books.Commands.CreateBook.Services;
 using Application.Common.Behaviours;
 using AutoMapper;
 using FluentValidation;

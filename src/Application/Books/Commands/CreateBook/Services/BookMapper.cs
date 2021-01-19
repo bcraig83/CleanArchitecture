@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Events;
 
-namespace Application.Books.Commands.CreateBook
+namespace Application.Books.Commands.CreateBook.Services
 {
     public class BookMapper
     {
