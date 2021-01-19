@@ -29,7 +29,7 @@ namespace WebApi
                 options.Filters.Add(new ProducesAttribute("application/json"));
             });
 
-            services.AddApplication();
+            services.AddApplication(Configuration);
             services.AddIntegration();
             services.AddDataAccess(Configuration);
 

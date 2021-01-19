@@ -10,20 +10,30 @@ namespace Application.Books.Commands.CreateBook
     public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, int>
     {
         private readonly IRepository<Book> _repository;
+        private readonly ApplicationOptions _options;
 
-        public CreateBookCommandHandler(IRepository<Book> repository)
+        public CreateBookCommandHandler(
+            IRepository<Book> repository,
+            ApplicationOptions options)
         {
             _repository = repository;
+            _options = options;
         }
 
         public async Task<int> Handle(
             CreateBookCommand request,
             CancellationToken cancellationToken)
         {
+            // TODO: handle _options == null
+            // TODO: add unit tests around this
+            string author = _options.StoreAuthorInLowercase 
+                ? request?.Author?.ToLower() 
+                : request?.Author;
+
             var entity = new Book
             {
                 Title = request.Title,
-                Author = request.Author,
+                Author = author,
                 Language = request.Language,
                 Publisher = request.Publisher,
                 ISBN10 = request.ISBN10
