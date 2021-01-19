@@ -14,7 +14,7 @@ namespace Infrastructure
             this IServiceCollection services)
         {
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
-            services.AddTransient<IDateTime, DateTimeService>();
+            services.AddTransient<IDateTimeService, DateTimeService>();
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMediatR(Assembly.GetExecutingAssembly());

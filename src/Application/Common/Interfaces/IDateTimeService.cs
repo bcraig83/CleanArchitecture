@@ -2,7 +2,7 @@
 
 namespace Application.Common.Interfaces
 {
-    public interface IDateTime
+    public interface IDateTimeService
     {
         DateTime Now { get; }
     }
