@@ -9,7 +9,7 @@ namespace Application.Books.Commands.CreateBook
 
         public BookMapper(ApplicationOptions options)
         {
-            _options = options;
+            _options = options ?? throw new System.ArgumentNullException(nameof(options));
         }
 
         public Book Map(CreateBookCommand command)

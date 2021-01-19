@@ -15,8 +15,8 @@ namespace Application.Books.Commands.CreateBook
             IRepository<Book> repository,
             BookMapper mapper)
         {
-            _repository = repository;
-            _mapper = mapper;
+            _repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
+            _mapper = mapper ?? throw new System.ArgumentNullException(nameof(mapper));
         }
 
         public async Task<int> Handle(
