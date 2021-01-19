@@ -32,7 +32,7 @@ namespace WebApi
             });
 
             services.AddApplication();
-            services.AddInfrastructure();
+            services.AddIntegration();
             services.AddDataAccess(Configuration);
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
