@@ -1,5 +1,4 @@
-﻿using Application.Common.Interfaces;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Threading;
@@ -11,16 +10,13 @@ namespace Application.Common.Behaviours
     {
         private readonly Stopwatch _timer;
         private readonly ILogger<TRequest> _logger;
-        private readonly ICurrentUserService _currentUserService;
 
         public PerformanceBehaviour(
-            ILogger<TRequest> logger,
-            ICurrentUserService currentUserService)
+            ILogger<TRequest> logger)
         {
             _timer = new Stopwatch();
 
             _logger = logger;
-            _currentUserService = currentUserService;
         }
 
         public async Task<TResponse> Handle(
@@ -42,12 +38,10 @@ namespace Application.Common.Behaviours
             }
 
             var requestName = typeof(TRequest).Name;
-            var userId = _currentUserService.UserId ?? string.Empty;
-            var userName = string.Empty;
 
             _logger.LogWarning(
-                "caSample Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",
-                requestName, elapsedMilliseconds, userId, userName, request);
+                "caSample Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@Request}",
+                requestName, elapsedMilliseconds, request);
 
             return response;
         }

@@ -18,7 +18,6 @@ namespace DataAccess.EntityFramework
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
     {
-        private readonly ICurrentUserService _currentUserService;
         private readonly IDateTime _dateTime;
         private IDbContextTransaction _currentTransaction;
         private readonly IMediator _mediator;
@@ -26,11 +25,9 @@ namespace DataAccess.EntityFramework
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions,
-            ICurrentUserService currentUserService,
             IDateTime dateTime,
             IMediator mediator) : base(options, operationalStoreOptions)
         {
-            _currentUserService = currentUserService;
             _dateTime = dateTime;
             _mediator = mediator;
         }
@@ -55,12 +52,10 @@ namespace DataAccess.EntityFramework
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = _currentUserService.UserId;
                         entry.Entity.Created = _dateTime.Now;
                         break;
 
                     case EntityState.Modified:
-                        entry.Entity.LastModifiedBy = _currentUserService.UserId;
                         entry.Entity.LastModified = _dateTime.Now;
                         break;
                 }

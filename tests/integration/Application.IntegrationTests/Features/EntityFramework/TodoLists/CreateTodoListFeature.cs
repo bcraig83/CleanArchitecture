@@ -93,7 +93,6 @@ namespace Application.IntegrationTests.Features.EntityFramework.TodoLists
             var createdList = await _fixture.FindAsync<TodoList>(createdTodoListId);
             createdList.ShouldNotBeNull();
             createdList.Title.ShouldBe(command.Title);
-            createdList.CreatedBy.ShouldBe(userId);
         }
     }
 }
