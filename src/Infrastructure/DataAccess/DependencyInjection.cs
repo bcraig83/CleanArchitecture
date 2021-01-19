@@ -16,17 +16,24 @@ namespace DataAccess
             this IServiceCollection services,
             IConfiguration configuration)
         {
+            var options = configuration
+                .GetSection(DataAccessOptions.AppSettingsFileLocation)
+                .Get<DataAccessOptions>();
+            services.AddScoped(x => options);
+
             services
                 .AddAuthentication()
                 .AddIdentityServerJwt();
 
-            if (configuration.GetValue<bool>("UseInMemoryPersistence"))
+            switch (options.PersistenceMechanism)
             {
-                services.AddPersistenceThroughInMemoryDatastore();
-            }
-            else
-            {
-                services.AddPersistenceThroughEntityFramework(configuration);
+                case "EntityFramework":
+                    services.AddPersistenceThroughEntityFramework(configuration, options);
+                    break;
+
+                default:
+                    services.AddPersistenceThroughInMemoryDatastore();
+                    break;
             }
 
             return services;
@@ -45,9 +52,10 @@ namespace DataAccess
 
         private static IServiceCollection AddPersistenceThroughEntityFramework(
            this IServiceCollection services,
-           IConfiguration configuration)
+           IConfiguration configuration,
+           DataAccessOptions options)
         {
-            if (configuration.GetValue<bool>("UseInMemoryDatabase"))
+            if (options.UseEntityFrameworkInMemoryDatabase)
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseInMemoryDatabase("caSampleDb"));
