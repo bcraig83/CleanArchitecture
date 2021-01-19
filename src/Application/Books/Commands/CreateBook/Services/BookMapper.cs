@@ -19,7 +19,6 @@ namespace Application.Books.Commands.CreateBook.Services
 
         public Book Map(CreateBookCommand command)
         {
-            // TODO: handle _options == null
             string author = _options.StoreAuthorInLowercase
                 ? command?.Author?.ToLower()
                 : command?.Author;
