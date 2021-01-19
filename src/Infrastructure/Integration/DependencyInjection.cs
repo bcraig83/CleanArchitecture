@@ -1,14 +1,13 @@
 ﻿using Application.Common.Interfaces;
-using Infrastructure.Email;
-using Infrastructure.Files;
-using Integration;
+using Integration.Email;
+using Integration.Files;
 using Integration.Services;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace Infrastructure
+namespace Integration
 {
     public static class DependencyInjection
     {

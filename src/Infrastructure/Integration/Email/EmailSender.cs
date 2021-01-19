@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Email
+namespace Integration.Email
 {
     public class EmailSender : IEmailSender
     {

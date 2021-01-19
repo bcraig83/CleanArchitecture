@@ -1,7 +1,7 @@
 using Application;
 using DataAccess;
 using DataAccess.EntityFramework;
-using Infrastructure;
+using Integration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

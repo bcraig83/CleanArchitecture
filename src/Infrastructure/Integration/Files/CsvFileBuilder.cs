@@ -1,12 +1,12 @@
 ﻿using Application.Common.Interfaces;
 using Application.TodoLists.Queries.ExportTodos.Models;
 using CsvHelper;
-using Infrastructure.Files.Maps;
+using Integration.Files.Maps;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
-namespace Infrastructure.Files
+namespace Integration.Files
 {
     public class CsvFileBuilder : ICsvFileBuilder
     {
