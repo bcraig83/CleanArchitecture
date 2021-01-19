@@ -1,5 +1,4 @@
-﻿using Application.Common.Interfaces;
-using DataAccess.EntityFramework;
+﻿using DataAccess.EntityFramework;
 using Domain.Common;
 using Infrastructure.Identity;
 using MediatR;
@@ -10,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using WebApi;
 using Xunit;
@@ -44,17 +42,6 @@ namespace Application.IntegrationTests.Features.EntityFramework
             services.AddLogging();
 
             startup.ConfigureServices(services);
-
-            // Replace service registration for ICurrentUserService
-            // Remove existing registration
-            var currentUserServiceDescriptor = services.FirstOrDefault(d =>
-                d.ServiceType == typeof(ICurrentUserService));
-
-            services.Remove(currentUserServiceDescriptor);
-
-            // Register testing version
-            services.AddTransient(provider =>
-                Mock.Of<ICurrentUserService>(s => s.UserId == CurrentUserId));
 
             ScopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
 

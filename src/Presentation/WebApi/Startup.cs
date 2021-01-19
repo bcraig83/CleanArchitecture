@@ -1,5 +1,4 @@
 using Application;
-using Application.Common.Interfaces;
 using DataAccess;
 using DataAccess.EntityFramework;
 using Infrastructure;
@@ -10,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebApi.Services;
 
 namespace WebApi
 {
@@ -34,8 +32,6 @@ namespace WebApi
             services.AddApplication();
             services.AddIntegration();
             services.AddDataAccess(Configuration);
-
-            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services
                 .AddHealthChecks()

@@ -99,8 +99,6 @@ namespace Application.IntegrationTests.Features.EntityFramework.TodoLists
             var list = await _fixture.FindAsync<TodoList>(listId);
 
             list.Title.ShouldBe(command.Title);
-            list.LastModifiedBy.ShouldNotBeNull();
-            list.LastModifiedBy.ShouldBe(userId);
             list.LastModified.ShouldNotBeNull();
         }
     }
