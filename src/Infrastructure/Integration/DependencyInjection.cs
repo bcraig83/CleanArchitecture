@@ -9,7 +9,7 @@ namespace Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(
+        public static IServiceCollection AddIntegration(
             this IServiceCollection services)
         {
             services.AddTransient<IDateTime, DateTimeService>();

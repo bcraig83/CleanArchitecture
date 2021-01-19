@@ -50,17 +50,6 @@ namespace Application.IntegrationTests.Features.InMemory
 
             startup.ConfigureServices(services);
 
-            // Replace service registration for ICurrentUserService
-            // Remove existing registration
-            var currentUserServiceDescriptor = services.FirstOrDefault(d =>
-                d.ServiceType == typeof(ICurrentUserService));
-
-            services.Remove(currentUserServiceDescriptor);
-
-            // Register testing version
-            services.AddTransient(provider =>
-                Mock.Of<ICurrentUserService>(s => s.UserId == CurrentUserId));
-
             // Replace service registration for email sender
             var currentEmailSenderServiceDescriptor = services.FirstOrDefault(d =>
                 d.ServiceType == typeof(IEmailSender));
