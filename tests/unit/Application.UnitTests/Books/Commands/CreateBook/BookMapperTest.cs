@@ -1,5 +1,6 @@
 ﻿using Application.Books.Commands.CreateBook;
 using Application.Books.Commands.CreateBook.Services;
+using Moq.AutoMock;
 using Shouldly;
 using Xunit;
 
@@ -15,7 +16,11 @@ namespace Application.UnitTests.Books.Commands.CreateBook
             {
                 StoreAuthorInLowercase = true
             };
-            var sut = new BookMapper(options);
+
+            var automocker = new AutoMocker();
+            automocker.Use(options);
+
+            var sut = automocker.CreateInstance<BookMapper>();
             var command = new CreateBookCommand
             {
                 Title = "Frank Sinatra: My Way",

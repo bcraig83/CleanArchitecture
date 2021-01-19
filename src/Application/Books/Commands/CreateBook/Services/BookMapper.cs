@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Events;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Books.Commands.CreateBook.Services
 {
@@ -7,15 +8,18 @@ namespace Application.Books.Commands.CreateBook.Services
     {
         private readonly ApplicationOptions _options;
 
-        public BookMapper(ApplicationOptions options)
+        public BookMapper(
+            ILogger<BookMapper> logger,
+            ApplicationOptions options)
         {
+            logger.LogInformation($"Options: {_options}");
+
             _options = options ?? throw new System.ArgumentNullException(nameof(options));
         }
 
         public Book Map(CreateBookCommand command)
         {
             // TODO: handle _options == null
-            // TODO: add unit tests around this
             string author = _options.StoreAuthorInLowercase
                 ? command?.Author?.ToLower()
                 : command?.Author;
