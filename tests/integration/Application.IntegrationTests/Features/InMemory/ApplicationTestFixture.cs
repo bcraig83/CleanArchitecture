@@ -2,10 +2,8 @@
 using Application.IntegrationTests.Fakes;
 using Domain.Common;
 using Domain.Repositories;
-using Infrastructure.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
@@ -69,39 +67,6 @@ namespace Application.IntegrationTests.Features.InMemory
             var mediator = scope.ServiceProvider.GetService<IMediator>();
 
             return await mediator.Send(request);
-        }
-
-        public async Task<string> RunAsDefaultUserAsync()
-        {
-            return await RunAsUserAsync("test@local", "Testing1234!");
-        }
-
-        public async Task<string> RunAsUserAsync(string userName, string password)
-        {
-            using var scope = ScopeFactory.CreateScope();
-
-            var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
-
-            var existingUser = await userManager.FindByNameAsync(userName);
-            if (existingUser != null)
-            {
-                return existingUser.Id;
-            }
-
-            var user = new ApplicationUser { UserName = userName, Email = userName };
-
-            var result = await userManager.CreateAsync(user, password);
-
-            if (result.Succeeded)
-            {
-                CurrentUserId = user.Id;
-
-                return CurrentUserId;
-            }
-
-            var errors = string.Join(Environment.NewLine, result.ToApplicationResult().Errors);
-
-            throw new Exception($"Unable to create {userName}.{Environment.NewLine}{errors}");
         }
 
         public async Task<TEntity> FindAsync<TEntity>(int id)
