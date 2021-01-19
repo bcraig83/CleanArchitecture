@@ -28,10 +28,9 @@ namespace Application.IntegrationTests.Features.InMemory
 
         public ApplicationTestFixture()
         {
-            // TODO: that app settings file should be called "appsettings.IntegrationTest.json"
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.Test.json", true, true)
+                .AddJsonFile("appsettings.InMemory.json", true, true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -41,7 +40,7 @@ namespace Application.IntegrationTests.Features.InMemory
             var services = new ServiceCollection();
 
             services.AddSingleton(Mock.Of<IWebHostEnvironment>(w =>
-                w.EnvironmentName == "Development" &&
+                w.EnvironmentName == "InMemory" &&
                 w.ApplicationName == "WebApi"));
 
             services.AddLogging();
