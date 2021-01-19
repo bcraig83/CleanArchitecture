@@ -30,7 +30,7 @@ namespace WebApi
             });
 
             services.AddApplication(Configuration);
-            services.AddIntegration();
+            services.AddIntegration(Configuration);
             services.AddDataAccess(Configuration);
 
             services
