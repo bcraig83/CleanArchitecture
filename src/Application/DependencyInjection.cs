@@ -1,4 +1,5 @@
-﻿using Application.Common.Behaviours;
+﻿using Application.Books.Commands.CreateBook;
+using Application.Common.Behaviours;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
@@ -18,6 +19,8 @@ namespace Application
                 .GetSection(ApplicationOptions.AppSettingsFileLocation)
                 .Get<ApplicationOptions>();
             services.AddScoped(x => options);
+
+            services.AddScoped<BookMapper>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
