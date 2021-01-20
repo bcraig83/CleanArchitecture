@@ -45,7 +45,7 @@ namespace DataAccess
         {
             services.AddSingleton(typeof(IRepository<>), typeof(InMemoryRepository<>));
 
-            services.AddScoped<EventProcessor>();
+            services.AddSingleton<EventProcessor>();
 
             return services;
         }

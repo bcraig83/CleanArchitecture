@@ -4,7 +4,7 @@
     "WebApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/TodoLists",
+      "launchUrl": "api/Books/health",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

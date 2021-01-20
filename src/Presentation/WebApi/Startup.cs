@@ -52,8 +52,7 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(
             IApplicationBuilder app,
-            IWebHostEnvironment env,
-            IHttpContextAccessor contextAccessor)
+            IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -68,8 +67,6 @@ namespace WebApi
 
             app.UseAuditMiddleware();
 
-            app.UseAuditCorrelationId(contextAccessor);
-
             app.UseHealthChecks("/health");
 
             app.UseHttpsRedirection();
@@ -77,8 +74,6 @@ namespace WebApi
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseIdentityServer();
 
             app.UseOpenApi();
             app.UseSwaggerUi3();
