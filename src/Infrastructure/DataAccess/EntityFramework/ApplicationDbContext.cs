@@ -18,14 +18,14 @@ namespace DataAccess.EntityFramework
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
     {
-        private readonly IDateTime _dateTime;
+        private readonly IDateTimeService _dateTime;
         private IDbContextTransaction _currentTransaction;
         private readonly IMediator _mediator;
 
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions,
-            IDateTime dateTime,
+            IDateTimeService dateTime,
             IMediator mediator) : base(options, operationalStoreOptions)
         {
             _dateTime = dateTime;

@@ -26,7 +26,7 @@ namespace Application.IntegrationTests.Features.EntityFramework
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile("appsettings.EntityFramework.json", true, true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -36,7 +36,7 @@ namespace Application.IntegrationTests.Features.EntityFramework
             var services = new ServiceCollection();
 
             services.AddSingleton(Mock.Of<IWebHostEnvironment>(w =>
-                w.EnvironmentName == "Development" &&
+                w.EnvironmentName == "EntityFramework" &&
                 w.ApplicationName == "WebApi"));
 
             services.AddLogging();

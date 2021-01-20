@@ -12,13 +12,13 @@ namespace DataAccess.InMemory
     {
         private readonly IDictionary<int, TEntity> _dataStore;
         private readonly EventProcessor _eventProcessor;
-        private readonly IDateTime _dateTimeService;
+        private readonly IDateTimeService _dateTimeService;
 
         private static int index = 1;
 
         public InMemoryRepository(
             EventProcessor eventProcessor, 
-            IDateTime dateTimeService)
+            IDateTimeService dateTimeService)
         {
             _dataStore = new Dictionary<int, TEntity>();
             _eventProcessor = eventProcessor;

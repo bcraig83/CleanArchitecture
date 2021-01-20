@@ -1,7 +1,7 @@
 using Application;
 using DataAccess;
 using DataAccess.EntityFramework;
-using Infrastructure;
+using Integration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,8 +29,8 @@ namespace WebApi
                 options.Filters.Add(new ProducesAttribute("application/json"));
             });
 
-            services.AddApplication();
-            services.AddIntegration();
+            services.AddApplication(Configuration);
+            services.AddIntegration(Configuration);
             services.AddDataAccess(Configuration);
 
             services
@@ -52,8 +52,7 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(
             IApplicationBuilder app,
-            IWebHostEnvironment env,
-            IHttpContextAccessor contextAccessor)
+            IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -68,8 +67,6 @@ namespace WebApi
 
             app.UseAuditMiddleware();
 
-            app.UseAuditCorrelationId(contextAccessor);
-
             app.UseHealthChecks("/health");
 
             app.UseHttpsRedirection();
@@ -77,8 +74,6 @@ namespace WebApi
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseIdentityServer();
 
             app.UseOpenApi();
             app.UseSwaggerUi3();

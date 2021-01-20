@@ -2,7 +2,7 @@
 using CsvHelper.Configuration;
 using System.Globalization;
 
-namespace Infrastructure.Files.Maps
+namespace Integration.Files.Maps
 {
     public class TodoItemRecordMap : ClassMap<TodoItemRecord>
     {

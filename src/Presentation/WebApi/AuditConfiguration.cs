@@ -1,7 +1,6 @@
 ﻿using Audit.Core;
 using Audit.WebApi;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -52,18 +51,6 @@ namespace WebApi
                 .IncludeRequestBody()
                 .IncludeResponseBody()
                 .WithEventType("HTTP:{verb}:{url}"));
-        }
-
-        /// <summary>
-        /// Add a RequestId so the audit events can be grouped per request
-        /// </summary>
-        public static void UseAuditCorrelationId(this IApplicationBuilder app, IHttpContextAccessor ctxAccesor)
-        {
-            Configuration.AddCustomAction(ActionType.OnScopeCreated, scope =>
-            {
-                var httpContext = ctxAccesor.HttpContext;
-                scope.Event.CustomFields[CorrelationIdField] = httpContext.TraceIdentifier;
-            });
         }
     }
 }
